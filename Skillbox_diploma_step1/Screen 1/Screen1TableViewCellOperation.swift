@@ -46,8 +46,8 @@ class Screen1TableViewCellOperation: UITableViewCell {
             labelAmount.text = String(format: "%.2f", delegateScreen1!.returnDataArrayOfOperations()[specVar].amount)
         }
         if delegateScreen1!.returnDataArrayOfOperations()[specVar].amount < 0 {
-            labelAmount.textColor = UIColor.red
-            currencyStatus.textColor = UIColor.red
+            labelAmount.textColor = UIColor.init(named: "InterfaceColorRed")
+            currencyStatus.textColor = UIColor.init(named: "InterfaceColorRed")
         }
         else{
             labelAmount.textColor = UIColor(cgColor: CGColor.init(srgbRed: 0.165, green: 0.671, blue: 0.014, alpha: 1))
