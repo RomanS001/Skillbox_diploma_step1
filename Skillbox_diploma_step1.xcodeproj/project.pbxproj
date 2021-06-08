@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4715215025F3A8E600FE585C /* Screen2TableViewCellDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4715214F25F3A8E600FE585C /* Screen2TableViewCellDate.swift */; };
 		4715819325B6FE310047C5D0 /* Screen2TableViewCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4715819225B6FE310047C5D0 /* Screen2TableViewCellHeader.swift */; };
+		47223682266C222400325D91 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 47223680266C222400325D91 /* CoreData.xcdatamodeld */; };
 		4729DC40263DA3AB00CA8B66 /* ViewControllerScreen1ContainerGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4729DC3F263DA3AB00CA8B66 /* ViewControllerScreen1ContainerGraph.swift */; };
 		472F288725A7319500CE1481 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472F288625A7319500CE1481 /* AppDelegate.swift */; };
 		472F288925A7319500CE1481 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472F288825A7319500CE1481 /* SceneDelegate.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		4715214F25F3A8E600FE585C /* Screen2TableViewCellDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen2TableViewCellDate.swift; sourceTree = "<group>"; };
 		4715819225B6FE310047C5D0 /* Screen2TableViewCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen2TableViewCellHeader.swift; sourceTree = "<group>"; };
+		47223681266C222400325D91 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
 		4729DC3F263DA3AB00CA8B66 /* ViewControllerScreen1ContainerGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerScreen1ContainerGraph.swift; sourceTree = "<group>"; };
 		472F288325A7319500CE1481 /* Skillbox_diploma_step1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skillbox_diploma_step1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		472F288625A7319500CE1481 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				472F288F25A7319500CE1481 /* Assets.xcassets */,
 				472F289125A7319500CE1481 /* LaunchScreen.storyboard */,
 				472F289425A7319500CE1481 /* Info.plist */,
+				47223680266C222400325D91 /* CoreData.xcdatamodeld */,
 			);
 			path = Skillbox_diploma_step1;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				47BEBB43262F91D1006FF254 /* Screen2Container_TableViewCellNewCategory.swift in Sources */,
 				475D711A26509A0F009D917A /* GraphView.swift in Sources */,
 				47F1759925BA2D320044BD30 /* ViewControllerScreen2Container.swift in Sources */,
+				47223682266C222400325D91 /* CoreData.xcdatamodeld in Sources */,
 				47CB73C325B4364700638185 /* Screen2TableViewCellCategory.swift in Sources */,
 				47621F9825B644BF0095A52F /* Screen2TableViewCellNote.swift in Sources */,
 				4750EFE725BC2C5C00167A92 /* Screen2Container_TableViewCellHeader.swift in Sources */,
@@ -755,6 +759,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		47223680266C222400325D91 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				47223681266C222400325D91 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = 47223681266C222400325D91 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 472F287B25A7319500CE1481 /* Project object */;
 }
