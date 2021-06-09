@@ -311,7 +311,7 @@ class ViewControllerScreen2: UIViewController {
     
     func screen2DataReceive(){
         dataArrayOfCategory = []
-        for n in Persistence.shared.returnRealmDataCategories(){
+        for n in Persistence.shared.returnCoreDataCategories(){
             dataArrayOfCategory.append(DataOfCategories(name1: n.name, icon1: n.icon, id1: n.id))
         }
 //        for n in dataArrayOfCategory {

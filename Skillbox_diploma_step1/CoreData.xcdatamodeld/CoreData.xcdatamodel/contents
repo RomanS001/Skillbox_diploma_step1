@@ -18,11 +18,11 @@
         <attribute name="lastIdOfOperations" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="surname" optional="YES" attributeType="String"/>
-        <relationship name="listOfCategories2" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category"/>
+        <relationship name="listOfCategories" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category"/>
     </entity>
     <elements>
-        <element name="Category" positionX="-113.1754760742188" positionY="-270.3391418457031" width="128" height="74"/>
-        <element name="ListOfOperations" positionX="83.07989501953125" positionY="-300.8646850585938" width="128" height="104"/>
-        <element name="Person" positionX="-298.5135803222656" positionY="-460.7606201171875" width="128" height="119"/>
+        <element name="Category" positionX="-113.1754760742188" positionY="-270.3391418457031" width="128" height="88"/>
+        <element name="ListOfOperations" positionX="83.07989501953125" positionY="-300.8646850585938" width="128" height="118"/>
+        <element name="Person" positionX="-298.5135803222656" positionY="-460.7606201171875" width="128" height="133"/>
     </elements>
 </model>
