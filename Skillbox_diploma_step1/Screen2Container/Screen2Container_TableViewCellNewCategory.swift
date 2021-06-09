@@ -24,7 +24,7 @@ class Screen2Container_TableViewCellNewCategory: UITableViewCell {
     
     @IBAction func buttonAddNewCategoryAction(_ sender: Any) {
         if textFieldNewCategory.text != "" {
-            Persistence.shared.addCategory(name: textFieldNewCategory.text!, icon: "")
+            try! Persistence.shared.addCategory(name: textFieldNewCategory.text!, icon: "")
             
             delegateScreen2Container?.screen2ContainerAddNewCategory()
             

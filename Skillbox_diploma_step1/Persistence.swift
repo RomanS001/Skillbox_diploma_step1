@@ -41,12 +41,16 @@ class Persistence{
     static let shared = Persistence()
     private let realm = try! Realm()
     
-    enum AllErrors: Error{
+    enum PersistenceErrors: Error{
         case appDelegateLevel
         case returnRealmDataCategoriesLevel
         case updateLastIdOfCategory
         case addCategoryLevel
         case addCategoryLevel2
+        case updateLastIdOfOperations
+        case addOperationLevel
+        case addOperationLevel2
+        case updateDaysForSortingLevel
     }
     
     
@@ -55,16 +59,12 @@ class Persistence{
     func returnCoreDataCategories() throws -> [NSManagedObject] {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            throw AllErrors.appDelegateLevel
+            throw PersistenceErrors.appDelegateLevel
         }
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSManagedObject>(entityName: "Category")
-        do {
-            let returnEntity = try context.fetch(request)
-            return returnEntity
-        } catch let error as NSError {
-            print("Could not fetch. Error: \(error), \(error.userInfo)")
-        }
+        let returnEntity = try context.fetch(request)
+        return returnEntity
         
     }
     
@@ -74,7 +74,7 @@ class Persistence{
         let lastIdOfCategory: Int?
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            throw AllErrors.appDelegateLevel
+            throw PersistenceErrors.appDelegateLevel
         }
         let context = appDelegate.persistentContainer.viewContext
         
@@ -86,12 +86,12 @@ class Persistence{
             lastIdOfCategory = allDataLastIdOfCategory.first?.value(forKey: "lastIdOfCategory") as! Int + 1
         } catch {
             print("Error in lastIdOfCategory")
-            throw AllErrors.updateLastIdOfCategory
+            throw PersistenceErrors.updateLastIdOfCategory
         }
         
         //Add Category
         guard let categoryEntitySample = NSEntityDescription.entity(forEntityName: "Category", in: context) else {
-            throw AllErrors.addCategoryLevel
+            throw PersistenceErrors.addCategoryLevel
         }
         let newEntityCategory = NSManagedObject(entity: categoryEntitySample, insertInto: context)
         newEntityCategory.setValue(icon, forKey: "icon")
@@ -100,8 +100,8 @@ class Persistence{
         do {
             try context.save()
         } catch {
-            throw AllErrors.addCategoryLevel2
             print("addCategory failed")
+            throw PersistenceErrors.addCategoryLevel2
         }
         
     }
@@ -110,7 +110,7 @@ class Persistence{
     func deleteCategory(idOfObject: Int) throws {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            throw AllErrors.appDelegateLevel
+            throw PersistenceErrors.appDelegateLevel
         }
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSManagedObject>(entityName: "Category")
@@ -120,6 +120,7 @@ class Persistence{
             for data in allDataCategory{
                 if data.value(forKey: "id") as! Int == idOfObject{
                     context.delete(data)
+                    return
                 }
             }
         }
@@ -130,7 +131,7 @@ class Persistence{
     func updateCategory(name: String, icon: String, idOfObject: Int) throws{
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            throw AllErrors.appDelegateLevel
+            throw PersistenceErrors.appDelegateLevel
         }
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSManagedObject>(entityName: "Category")
@@ -144,7 +145,6 @@ class Persistence{
                     try context.save()
                 }
             }
-        
         }
         
     }
@@ -154,76 +154,142 @@ class Persistence{
     //MARK: - операции
 
     
-    func addOperations(amount: Double, category: String, note: String, date: Date){
-        let operation = ListOfOperations()
-        operation.category = category
-        operation.note = note
-        operation.amount = amount
-        operation.date = date
-        operation.id = realm.objects(Person.self).first!.lastIdOfOperations + 1
-        try! realm.write{
-            realm.add(operation)
-            realm.objects(Person.self).first!.lastIdOfOperations = operation.id
+    func addOperations(amount: Double, category: String, note: String, date: Date) throws {
+        
+        
+        let lastIdOfOperations: Int?
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            throw PersistenceErrors.appDelegateLevel
         }
+        let context = appDelegate.persistentContainer.viewContext
+        
+        //Update lastIdOfCategory
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
+        request.returnsObjectsAsFaults = false
+        do{
+            let allDataPerson = try context.fetch(request) as! [NSManagedObject]
+            lastIdOfOperations = allDataPerson.first?.value(forKey: "lastIdOfOperations") as! Int + 1
+        } catch {
+            print("Error in lastIdOfOperations")
+            throw PersistenceErrors.updateLastIdOfOperations
+        }
+        
+        //Add Operation
+        guard let operationEntitySample = NSEntityDescription.entity(forEntityName: "ListOfOperation", in: context) else {
+            throw PersistenceErrors.addOperationLevel
+        }
+        let newEntityOperation = NSManagedObject(entity: operationEntitySample, insertInto: context)
+        newEntityOperation.setValue(amount, forKey: "amount")
+        newEntityOperation.setValue(category, forKey: "category")
+        newEntityOperation.setValue(note, forKey: "note")
+        newEntityOperation.setValue(date, forKey: "date")
+        newEntityOperation.setValue(lastIdOfOperations, forKey: "id")
+        do {
+            try context.save()
+        } catch {
+            print("addCategory failed")
+            throw PersistenceErrors.addOperationLevel2
+        }
+
     }
     
     
-    func updateOperations(amount: Double, category: String, note: String, date: Date, idOfObject: Int){
-        print("updateOperations")
-        let particularOperations = realm.objects(ListOfOperations.self).filter("id == \(idOfObject)").first
-        try! realm.write{
-            print("particularOperations.text= \(particularOperations)")
-            particularOperations?.setValue(category, forKey: "category")
-            particularOperations?.setValue(note, forKey: "note")
-            particularOperations?.setValue(amount, forKey: "amount")
-            particularOperations?.setValue(date, forKey: "date")
+    func updateOperations(amount: Double, category: String, note: String, date: Date, idOfObject: Int) throws {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            throw PersistenceErrors.appDelegateLevel
         }
+        let context = appDelegate.persistentContainer.viewContext
+        
+        //Update lastIdOfCategory
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ListOfOperations")
+        request.returnsObjectsAsFaults = false
+        do{
+            let allDataListOfOperations = try context.fetch(request) as! [NSManagedObject]
+            
+            for data in allDataListOfOperations{
+                if data.value(forKey: "id") as! Int == idOfObject{
+                    data.setValue(amount, forKey: "amount")
+                    data.setValue(category, forKey: "category")
+                    data.setValue(note, forKey: "note")
+                    data.setValue(date, forKey: "date")
+                    try context.save()
+                }
+            }
+        } catch {
+            print("addCategory failed")
+            throw PersistenceErrors.addOperationLevel2
+        }
+        
     }
     
         
-    func getRealmDataOperations() -> Results<ListOfOperations>{
-        let allOperations = realm.objects(ListOfOperations.self)
-        return allOperations
+    func getCoreDataOperations() throws -> [NSManagedObject] {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            throw PersistenceErrors.appDelegateLevel
+        }
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ListOfOperations")
+        request.returnsObjectsAsFaults = false
+        let allDataListOfOperations = try context.fetch(request) as! [NSManagedObject]
+        return allDataListOfOperations
     }
     
 
-    func deleteOperation(idOfObject: Int){
-        let particularOperations = realm.objects(ListOfOperations.self).filter("id == \(idOfObject)")
-//        var index: Int? = allOperations.index(of: particularObject) ?? nil
-        print("idOfObject for delete= \(idOfObject)")
-        try! realm.write{
-            realm.delete(particularOperations)
+    func deleteOperation(idOfObject: Int) throws {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            throw PersistenceErrors.appDelegateLevel
         }
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSManagedObject>(entityName: "ListOfOperations")
+        request.returnsObjectsAsFaults = false
+        do{
+            let allDataOperations = try context.fetch(request)
+            for data in allDataOperations{
+                if data.value(forKey: "id") as! Int == idOfObject{
+                    context.delete(data)
+                    return
+                }
+            }
+        }
+        
     }
     
     
     //MARK: - личные данные
     
-    func updateDaysForSorting(daysForSorting: Int){
-        let person = realm.objects(Person.self).first
+    func updateDaysForSorting(daysForSorting: Int) throws {
         
-        try! realm.write{
-            person!.daysForSorting = daysForSorting
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            throw PersistenceErrors.appDelegateLevel
         }
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
+        request.returnsObjectsAsFaults = false
+        do{
+            let allDataPerson = try context.fetch(request) as! [NSManagedObject]
+            allDataPerson.first?.setValue(daysForSorting, forKey: "daysForSorting")
+            try context.save()
+        } catch {
+            print("updateDaysForSorting failed")
+            throw PersistenceErrors.updateDaysForSortingLevel
+        }
+        
     }
     
         
-    func returnDaysForSorting() -> Int{
-        print("old person returned")
-        let person = realm.objects(Person.self).first
-        if person?.daysForSorting != nil {
-            return person!.daysForSorting
+    func returnDaysForSorting() throws -> Int{
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            throw PersistenceErrors.appDelegateLevel
         }
-        else{
-            print("newPerson added")
-            let newPerson = Person()
-            newPerson.daysForSorting = 30
-            try! realm.write{
-                realm.add(newPerson)
-            }
-            return newPerson.daysForSorting
-        }
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
+        request.returnsObjectsAsFaults = false
+        let allDataPerson = try context.fetch(request) as! [NSManagedObject]
+        return allDataPerson.first?.value(forKey: "daysForSorting") as! Int
     }
-    
     
 }

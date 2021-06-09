@@ -126,10 +126,10 @@ class ViewControllerScreen2: UIViewController {
             
             if screen2StatusEditing == true{
                 print("newOperation.amount222= \(newOperation.amount)")
-                delegateScreen1?.editOperationInRealm(newAmount: newOperation.amount, newCategory: newOperation.category, newNote: newOperation.note, newDate: newOperation.date, id: newOperation.id)
+                delegateScreen1?.editOperationInRealm(newAmount: newOperation.amount, newCategory: newOperation.category!, newNote: newOperation.note!, newDate: newOperation.date!, id: Int(newOperation.id))
             }
             else{
-                delegateScreen1?.addOperationInRealm(newAmount: newOperation.amount, newCategory: newOperation.category, newNote: newOperation.note, newDate: newOperation.date)
+                delegateScreen1?.addOperationInRealm(newAmount: newOperation.amount, newCategory: newOperation.category!, newNote: newOperation.note!, newDate: newOperation.date!)
             }
             
             delegateScreen1?.screen1AllUpdate()
@@ -311,8 +311,8 @@ class ViewControllerScreen2: UIViewController {
     
     func screen2DataReceive(){
         dataArrayOfCategory = []
-        for n in Persistence.shared.returnCoreDataCategories(){
-            dataArrayOfCategory.append(DataOfCategories(name1: n.name, icon1: n.icon, id1: n.id))
+        for n in try! Persistence.shared.returnCoreDataCategories(){
+            dataArrayOfCategory.append(DataOfCategories(name1: n.value(forKey: "name") as! String, icon1: n.value(forKey: "icon") as! String, id1: n.value(forKey: "id") as! Int))
         }
 //        for n in dataArrayOfCategory {
 //            print("dataArrayOfCategory= \(n.name)")
@@ -462,10 +462,10 @@ extension ViewControllerScreen2: protocolScreen2Delegate{
         }
 
         //set Date
-        datePicker.date = newOperation.date
+        datePicker.date = newOperation.date!
         
         //set Note
-        delegateScreen2TableViewCellNote?.setNoteViewText(newText: self.newOperation.note)
+        delegateScreen2TableViewCellNote?.setNoteViewText(newText: self.newOperation.note!)
         print("newOperation.note= \(newOperation.note)")
 
         labelScreen2Header.text = "Edit"
@@ -515,7 +515,7 @@ extension ViewControllerScreen2: protocolScreen2Delegate{
     
     
     func setIDInNewOperation(id: Int) {
-        newOperation.id = id
+        newOperation.id = Int64(id)
     }
     
     

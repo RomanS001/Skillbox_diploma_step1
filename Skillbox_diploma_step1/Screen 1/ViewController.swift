@@ -7,7 +7,7 @@
 
 
 import UIKit
-import RealmSwift
+import CoreData
 
 protocol protocolScreen1Delegate{
     func findAmountOfHeaders() //подсчёт заголовков с датами в основнй таблице экрана
@@ -31,6 +31,11 @@ protocol protocolScreen1Delegate{
     func returnDayOfDate(_ dateInternal: Date) -> String
     func returnMonthOfDate(_ dateInternal: Date) -> String
     func returnDelegateScreen1GraphContainer() -> protocolScreen1ContainerGraph
+}
+
+enum ViewControllerError: Error{
+    case screen1DataReceive
+    case daysForSortingCoreDataUpdate
 }
 
 
@@ -201,7 +206,7 @@ class ViewController: UIViewController {
     func changeDaysForSorting(){
         borderLineForMenu(days: daysForSorting)
         screen1TableUpdateSorting(days: daysForSorting)
-        daysForSortingRealmUpdate()
+        try! daysForSortingCoreDataUpdate()
         countingIncomesAndExpensive()
         delegateScreen1GraphContainer?.containerGraphUpdate()
     }
@@ -436,18 +441,33 @@ class ViewController: UIViewController {
     }
     
     
-    func screen1DataReceive(){
-        dataArrayOfOperationsOriginal = []
-        for n in Persistence.shared.getRealmDataOperations(){
-            dataArrayOfOperationsOriginal.append(DataOfOperations(amount1: n.amount, category1: n.category, note1: n.note, date1: n.date, id1: n.id))
+    func screen1DataReceive() throws {
+        
+        let coreDataOperations: [NSManagedObject]?
+        let daysForSorting: Int?
+        
+        do{
+            coreDataOperations = try Persistence.shared.getCoreDataOperations()
+            daysForSorting = try Persistence.shared.returnDaysForSorting()
+        } catch {
+            throw ViewControllerError.screen1DataReceive
         }
-        daysForSorting = Persistence.shared.returnDaysForSorting()
-        print("daysForSorting in screen1DataReceive= \(Persistence.shared.returnDaysForSorting())")
+        
+        dataArrayOfOperationsOriginal = []
+        for n in coreDataOperations! {
+            dataArrayOfOperationsOriginal.append(DataOfOperations(amount1: n.value(forKey: "amount") as! Double, category1: n.value(forKey: "category") as! String, note1: n.value(forKey: "note") as! String, date1: n.value(forKey: "date") as! Date, id1: n.value(forKey: "id") as! Int))
+        }
+//        daysForSorting = Persistence.shared.returnDaysForSorting()
+        print("daysForSorting in screen1DataReceive= \(daysForSorting)")
         print("newTableDataArrayOriginal= \(dataArrayOfOperationsOriginal)")
     }
     
-    func daysForSortingRealmUpdate(){
-        Persistence.shared.updateDaysForSorting(daysForSorting: daysForSorting)
+    func daysForSortingCoreDataUpdate() throws {
+        do {
+            try Persistence.shared.updateDaysForSorting(daysForSorting: daysForSorting)
+        } catch {
+            throw ViewControllerError.daysForSortingCoreDataUpdate
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -534,12 +554,12 @@ extension ViewController: protocolScreen1Delegate{
     
     func editCategoryInRealm(newName: String, newIcon: String, id: Int) {
         print("editCategoryInRealm")
-        Persistence.shared.updateCategory(name: newName, icon: newIcon, idOfObject: delegateScreen2!.returnDataArrayOfCategory()[id].id)
+        try! Persistence.shared.updateCategory(name: newName, icon: newIcon, idOfObject: delegateScreen2!.returnDataArrayOfCategory()[id].id)
     }
     
     
     func deleteCategoryInRealm(id: Int) {
-        Persistence.shared.deleteCategory(idOfObject: delegateScreen2!.returnDataArrayOfCategory()[id].id)
+        try! Persistence.shared.deleteCategory(idOfObject: delegateScreen2!.returnDataArrayOfCategory()[id].id)
     }
     
     
@@ -552,23 +572,23 @@ extension ViewController: protocolScreen1Delegate{
     
     func deleteOperationInRealm(tag: Int) {
         actionsOperationsClosePopUpScreen1()
-        Persistence.shared.deleteOperation(idOfObject: returnNewTableDataArray()[tag].id)
+        try! Persistence.shared.deleteOperation(idOfObject: returnNewTableDataArray()[tag].id)
     }
     
     
     func addOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date) {
-        Persistence.shared.addOperations(amount: newAmount, category: newCategory, note: newNote, date: newDate)
+        try! Persistence.shared.addOperations(amount: newAmount, category: newCategory, note: newNote, date: newDate)
     }
     
     
     func editOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date, id: Int) {
         print("editOperationInRealm")
-        Persistence.shared.updateOperations(amount: newAmount, category: newCategory, note: newNote, date: newDate, idOfObject: id)
+        try! Persistence.shared.updateOperations(amount: newAmount, category: newCategory, note: newNote, date: newDate, idOfObject: id)
     }
     
     
     func screen1AllUpdate() {
-        screen1DataReceive()
+        try! screen1DataReceive()
         screen1TableUpdateSorting(days: daysForSorting)
         countingIncomesAndExpensive()
         changeDaysForSorting()
