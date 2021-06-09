@@ -51,6 +51,7 @@ class Persistence{
         case addOperationLevel
         case addOperationLevel2
         case updateDaysForSortingLevel
+        case addPerson
     }
     
     
@@ -289,7 +290,23 @@ class Persistence{
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
         request.returnsObjectsAsFaults = false
         let allDataPerson = try context.fetch(request) as! [NSManagedObject]
-        return allDataPerson.first?.value(forKey: "daysForSorting") as! Int
+        
+        if allDataPerson.isEmpty {
+            guard let personEntitySample = NSEntityDescription.entity(forEntityName: "Person", in: context) else {
+                throw PersistenceErrors.addCategoryLevel
+            }
+            let newEntityPerson = NSManagedObject(entity: personEntitySample, insertInto: context)
+    //        newEntityCategory.setValue(icon, forKey: "icon")
+            do {
+                try context.save()
+            } catch {
+                print("addPerson failed")
+                throw PersistenceErrors.addPerson
+            }
+            return 30
+        } else {
+            return allDataPerson.first?.value(forKey: "daysForSorting") as! Int
+        }
     }
     
 }
