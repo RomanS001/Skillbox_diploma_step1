@@ -5,45 +5,17 @@
 //  Created by Roman on 26.01.2021.
 //
 
+import UIKit
 import Foundation
-import RealmSwift
 import CoreData
 
-
-//class Person: Object{
-//    @objc dynamic var name: String = ""
-//    @objc dynamic var surname: String = ""
-//    @objc dynamic var daysForSorting: Int = 0
-//    @objc dynamic var lastIdOfOperations: Int = -1
-//    @objc dynamic var lastIdOfCategories: Int = -1
-//    var listOfCategory = List<Category>()
-//}
-//
-//
-//class ListOfOperations: Object{
-//    @objc dynamic var amount: Double = 0
-//    @objc dynamic var category: String = ""
-//    @objc dynamic var note: String = ""
-//    @objc dynamic var date: Date = Date.init(timeIntervalSince1970: TimeInterval(0))
-//    @objc dynamic var id: Int = 0
-//}
-//
-//
-//class Category: Object{
-//    @objc dynamic var name: String = ""
-//    @objc dynamic var icon: String = ""
-//    @objc dynamic var id: Int = 0
-//}
-
 class Persistence{
-
     
     static let shared = Persistence()
-    private let realm = try! Realm()
     
     enum PersistenceErrors: Error{
         case appDelegateLevel
-        case returnRealmDataCategoriesLevel
+        case returnCoreDataCategoriesLevel
         case updateLastIdOfCategory
         case addCategoryLevel
         case addCategoryLevel2
@@ -58,6 +30,7 @@ class Persistence{
     //MARK: - категории
     
     func returnCoreDataCategories() throws -> [NSManagedObject] {
+        print("start returnCoreDataCategories")
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             throw PersistenceErrors.appDelegateLevel
@@ -65,6 +38,7 @@ class Persistence{
         let context = appDelegate.persistentContainer.viewContext
         let request = NSFetchRequest<NSManagedObject>(entityName: "Category")
         let returnEntity = try context.fetch(request)
+        print("finish returnCoreDataCategories")
         return returnEntity
         
     }
@@ -72,6 +46,7 @@ class Persistence{
     
     func addCategory(name: String, icon: String) throws {
         
+        print("start addCategory")
         let lastIdOfCategory: Int?
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -105,11 +80,13 @@ class Persistence{
             throw PersistenceErrors.addCategoryLevel2
         }
         
+        print("finish addCategory")
     }
     
     
     func deleteCategory(idOfObject: Int) throws {
         
+        print("start deleteCategory")
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             throw PersistenceErrors.appDelegateLevel
         }
@@ -126,11 +103,13 @@ class Persistence{
             }
         }
         
+        print("finish deleteCategory")
     }
     
     
     func updateCategory(name: String, icon: String, idOfObject: Int) throws{
         
+        print("start updateCategory")
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             throw PersistenceErrors.appDelegateLevel
         }
@@ -148,6 +127,7 @@ class Persistence{
             }
         }
         
+        print("finish updateCategory")
     }
 
     
@@ -157,7 +137,7 @@ class Persistence{
     
     func addOperations(amount: Double, category: String, note: String, date: Date) throws {
         
-        
+        print("start addOperations")
         let lastIdOfOperations: Int?
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -192,12 +172,14 @@ class Persistence{
             print("addCategory failed")
             throw PersistenceErrors.addOperationLevel2
         }
-
+        
+        print("finish addOperations")
     }
     
     
     func updateOperations(amount: Double, category: String, note: String, date: Date, idOfObject: Int) throws {
         
+        print("start updateOperations")
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             throw PersistenceErrors.appDelegateLevel
         }
@@ -222,11 +204,14 @@ class Persistence{
             print("addCategory failed")
             throw PersistenceErrors.addOperationLevel2
         }
+        print("finish updateOperations")
         
     }
     
         
     func getCoreDataOperations() throws -> [NSManagedObject] {
+        
+        print("start getCoreDataOperations")
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             throw PersistenceErrors.appDelegateLevel
         }
@@ -234,12 +219,14 @@ class Persistence{
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ListOfOperations")
         request.returnsObjectsAsFaults = false
         let allDataListOfOperations = try context.fetch(request) as! [NSManagedObject]
+        print("finish getCoreDataOperations")
         return allDataListOfOperations
     }
     
 
     func deleteOperation(idOfObject: Int) throws {
         
+        print("start deleteOperation")
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             throw PersistenceErrors.appDelegateLevel
         }
@@ -255,6 +242,7 @@ class Persistence{
                 }
             }
         }
+        print("finish deleteOperation")
         
     }
     
@@ -263,6 +251,7 @@ class Persistence{
     
     func updateDaysForSorting(daysForSorting: Int) throws {
         
+        print("start updateDaysForSorting")
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             throw PersistenceErrors.appDelegateLevel
         }
@@ -277,12 +266,14 @@ class Persistence{
             print("updateDaysForSorting failed")
             throw PersistenceErrors.updateDaysForSortingLevel
         }
+        print("start updateDaysForSorting")
         
     }
     
         
     func returnDaysForSorting() throws -> Int{
         
+        print("start returnDaysForSorting")
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             throw PersistenceErrors.appDelegateLevel
         }
@@ -307,6 +298,8 @@ class Persistence{
         } else {
             return allDataPerson.first?.value(forKey: "daysForSorting") as! Int
         }
+        print("finish returnDaysForSorting")
+        
     }
     
 }

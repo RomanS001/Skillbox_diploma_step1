@@ -16,12 +16,12 @@ protocol protocolScreen1Delegate{
     func actionsOperationsClosePopUpScreen1() //закрывает PopUp-окно конкретной операции
     func editOperation(tag: Int) //переход в редактирование выбранной операции на втором экране
     
-    //realm
-    func addOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date)
-    func editOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date, id: Int)
-    func deleteOperationInRealm(tag: Int)
-    func deleteCategoryInRealm(id: Int)
-    func editCategoryInRealm(newName: String, newIcon: String, id: Int)
+    //CoreData
+    func addOperationInCoreData(newAmount: Double, newCategory: String, newNote: String, newDate: Date)
+    func editOperationInCoreData(newAmount: Double, newCategory: String, newNote: String, newDate: Date, id: Int)
+    func deleteOperationInCoreData(tag: Int)
+    func deleteCategoryInCoreData(id: Int)
+    func editCategoryInCoreData(newName: String, newIcon: String, id: Int)
     
     //функции возврата
     func returnNewTableDataArray() -> [DataOfOperations] //возвращает данные, которые отображаются в данный момент
@@ -106,8 +106,8 @@ class ViewController: UIViewController {
     private var delegateScreen1Container: protocolScreen1ContainerOperation?
     private var delegateScreen1GraphContainer: protocolScreen1ContainerGraph?
     
-    var dataArrayOfOperationsOriginal: [DataOfOperations] = [] //хранение оригинала данных из Realm
-    var dataArrayOfOperations: [DataOfOperations] = [] //хранение модифицированных данных из Realm для конкретного режима отоборажения
+    var dataArrayOfOperationsOriginal: [DataOfOperations] = [] //хранение оригинала данных из CoreData
+    var dataArrayOfOperations: [DataOfOperations] = [] //хранение модифицированных данных из CoreData для конкретного режима отоборажения
     var arrayForIncrease: [Int] = [0] //показывает количество заголовков с новой датой в таблице, которое предшествует конкретной операции
     var graphDataArray: [GraphData] = []
     var daysForSorting: Int = 30
@@ -552,13 +552,13 @@ extension ViewController: protocolScreen1Delegate{
     }
     
     
-    func editCategoryInRealm(newName: String, newIcon: String, id: Int) {
-        print("editCategoryInRealm")
+    func editCategoryInCoreData(newName: String, newIcon: String, id: Int) {
+        print("editCategoryInCoreData")
         try! Persistence.shared.updateCategory(name: newName, icon: newIcon, idOfObject: delegateScreen2!.returnDataArrayOfCategory()[id].id)
     }
     
     
-    func deleteCategoryInRealm(id: Int) {
+    func deleteCategoryInCoreData(id: Int) {
         try! Persistence.shared.deleteCategory(idOfObject: delegateScreen2!.returnDataArrayOfCategory()[id].id)
     }
     
@@ -570,19 +570,19 @@ extension ViewController: protocolScreen1Delegate{
     }
     
     
-    func deleteOperationInRealm(tag: Int) {
+    func deleteOperationInCoreData(tag: Int) {
         actionsOperationsClosePopUpScreen1()
         try! Persistence.shared.deleteOperation(idOfObject: returnNewTableDataArray()[tag].id)
     }
     
     
-    func addOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date) {
+    func addOperationInCoreData(newAmount: Double, newCategory: String, newNote: String, newDate: Date) {
         try! Persistence.shared.addOperations(amount: newAmount, category: newCategory, note: newNote, date: newDate)
     }
     
     
-    func editOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date, id: Int) {
-        print("editOperationInRealm")
+    func editOperationInCoreData(newAmount: Double, newCategory: String, newNote: String, newDate: Date, id: Int) {
+        print("editOperationInCoreData")
         try! Persistence.shared.updateOperations(amount: newAmount, category: newCategory, note: newNote, date: newDate, idOfObject: id)
     }
     

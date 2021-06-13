@@ -11,22 +11,6 @@ protocol protocolScreen2TableViewCellDateDelegate{
     func returnDateTextField() -> UILabel
 }
 
-//class CustomTextField: UITextField {
-//
-//    override func caretRect(for position: UITextPosition) -> CGRect {
-//        return CGRect.zero
-//    }
-//    selec
-//    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-//        false
-//    }
-//
-//    override func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
-//    }
-//
-////    override func caretRect(for position: UITextPosition) -> CGRect { .zero }
-//}
-
 class Screen2TableViewCellDate: UITableViewCell {
 
     @IBOutlet var labelDate: UILabel!

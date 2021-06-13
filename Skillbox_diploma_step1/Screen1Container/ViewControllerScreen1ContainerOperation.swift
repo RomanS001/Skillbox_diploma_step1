@@ -45,7 +45,7 @@ class ViewControllerScreen1ContainerOperation: UIViewController{
     
     
     @IBAction func buttonActionToDeleteOperation(_ sender: Any) {
-        delegateScreen1?.deleteOperationInRealm(tag: specVar)
+        delegateScreen1?.deleteOperationInCoreData(tag: specVar)
         delegateScreen1?.actionsOperationsClosePopUpScreen1()
         delegateScreen1?.screen1AllUpdate()
     }

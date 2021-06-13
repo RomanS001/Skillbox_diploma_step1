@@ -38,7 +38,7 @@ class Screen2Container_TableViewCellChangeCategory: UITableViewCell, UITextField
     //MARK: - переходы
     
     @IBAction func buttonDeleteCategoryAction(_ sender: Any) {
-        delegateScreen2Container?.returnDelegateScreen2().returnDelegateScreen1().deleteCategoryInRealm(id: specCellTag)
+        delegateScreen2Container?.returnDelegateScreen2().returnDelegateScreen1().deleteCategoryInCoreData(id: specCellTag)
         delegateScreen2Container?.screen2ContainerDeleteCategory(index: specCellTag)
     }
     
@@ -166,7 +166,7 @@ extension Screen2Container_TableViewCellChangeCategory: protocolScreen2Container
         buttonEditNameCategory.isHidden = false
         buttonConfirmNewName.isHidden = true
         
-        delegateScreen2Container?.returnDelegateScreen2().returnDelegateScreen1().editCategoryInRealm(newName: textFieldNameCategory.text!, newIcon: "", id: specCellTag)
+        delegateScreen2Container?.returnDelegateScreen2().returnDelegateScreen1().editCategoryInCoreData(newName: textFieldNameCategory.text!, newIcon: "", id: specCellTag)
         delegateScreen2Container?.setCurrentActiveEditingCell(CategoryID: 0)
     }
 
