@@ -130,7 +130,6 @@ class ViewControllerScreen1ContainerGraph: UIViewController {
             print("n.cumulativeAmount= \(n.amount), n.date= \(n.date)")
         }
         
-        graphView.setDeligateScreen1ContainerGraph(deligate: self)
         graphView.setGraphPoints(data: graphDataFinal)
         graphView.setNeedsDisplay()
     }
@@ -142,6 +141,8 @@ class ViewControllerScreen1ContainerGraph: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        graphView.setDelegateScreen1ContainerGraph(deligate: self)
 
         graphView.layer.cornerRadius = 20
         graphView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner]

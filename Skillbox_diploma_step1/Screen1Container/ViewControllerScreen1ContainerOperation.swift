@@ -77,23 +77,23 @@ extension ViewControllerScreen1ContainerOperation: protocolScreen1ContainerOpera
         specVar = specCellTag - delegateScreen1!.returnArrayForIncrease()[specCellTag]
         
         //Отображения category
-        labelCategory.text = delegateScreen1!.returnNewTableDataArray()[specVar].category
+        labelCategory.text = delegateScreen1!.returnDataArrayOfOperations()[specVar].category
 
         // Отображения date
         let formatterPrint = DateFormatter()
         formatterPrint.dateFormat = "d MMMM YYYY"
-        labelDate.text = formatterPrint.string(from: delegateScreen1!.returnNewTableDataArray()[specVar].date)
+        labelDate.text = formatterPrint.string(from: delegateScreen1!.returnDataArrayOfOperations()[specVar].date)
         
         // Отображения amount
-        if delegateScreen1!.returnNewTableDataArray()[specVar].amount.truncatingRemainder(dividingBy: 1) == 0 {
-            labelAmount.text = String(format: "%.0f", delegateScreen1!.returnNewTableDataArray()[specVar].amount)
+        if delegateScreen1!.returnDataArrayOfOperations()[specVar].amount.truncatingRemainder(dividingBy: 1) == 0 {
+            labelAmount.text = String(format: "%.0f", delegateScreen1!.returnDataArrayOfOperations()[specVar].amount)
         }
         else {
-            labelAmount.text = String(format: "%.2f", delegateScreen1!.returnNewTableDataArray()[specVar].amount)
+            labelAmount.text = String(format: "%.2f", delegateScreen1!.returnDataArrayOfOperations()[specVar].amount)
         }
         
         // Отображения currencyStatus
-        if delegateScreen1!.returnNewTableDataArray()[specVar].amount < 0 {
+        if delegateScreen1!.returnDataArrayOfOperations()[specVar].amount < 0 {
             labelAmount.textColor = UIColor.red
             currencyStatus.textColor = UIColor.red
         }
@@ -103,7 +103,7 @@ extension ViewControllerScreen1ContainerOperation: protocolScreen1ContainerOpera
         }
         
         //Отображение textViewNotes
-        textViewNotes.text = delegateScreen1!.returnNewTableDataArray()[specVar].note
+        textViewNotes.text = delegateScreen1!.returnDataArrayOfOperations()[specVar].note
     }
     
 }

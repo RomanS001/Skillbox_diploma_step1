@@ -8,7 +8,7 @@
 import UIKit
 
 protocol protocolGraphView{
-    func setDeligateScreen1ContainerGraph(deligate: protocolScreen1ContainerGraph)
+    func setDelegateScreen1ContainerGraph(deligate: protocolScreen1ContainerGraph)
     func setGraphPoints(data: [GraphData])
 }
 
@@ -220,7 +220,7 @@ protocol protocolGraphView{
 
 extension GraphView: protocolGraphView{
     
-    func setDeligateScreen1ContainerGraph(deligate: protocolScreen1ContainerGraph) {
+    func setDelegateScreen1ContainerGraph(deligate: protocolScreen1ContainerGraph) {
         deligateScreen1ContainerGraph = deligate
     }
     

@@ -24,13 +24,14 @@ protocol protocolScreen1Delegate{
     func editCategoryInCoreData(newName: String, newIcon: String, id: Int)
     
     //функции возврата
-    func returnNewTableDataArray() -> [DataOfOperations] //возвращает данные, которые отображаются в данный момент
+    func returnDataArrayOfOperations() -> [DataOfOperations] //возвращает данные, которые отображаются в данный момент
     func returnArrayForIncrease() -> [Int] //возвращает инкремент каждой ячейки основной таблице. Показывает количество заголовков до конкретной ячейки.
     func returnDaysForSorting() -> Int
     func returnGraphData() -> [GraphData]
     func returnDayOfDate(_ dateInternal: Date) -> String
     func returnMonthOfDate(_ dateInternal: Date) -> String
     func returnDelegateScreen1GraphContainer() -> protocolScreen1ContainerGraph
+    func returnIncomesExpenses() -> [String : Double]
 }
 
 enum ViewControllerError: Error{
@@ -83,12 +84,12 @@ class ViewController: UIViewController {
     @IBOutlet var labelMothly: UILabel!
     @IBOutlet var labelYearly: UILabel!
     @IBOutlet var bottomPopInView: UIView!
-    @IBOutlet var labelAmountOfIncome: UILabel!
+    @IBOutlet var labelAmountOfIncomes: UILabel!
     @IBOutlet var labelAmountOfExpenses: UILabel!
     @IBOutlet var constraintTopMenuBottomStrip: NSLayoutConstraint!
     @IBOutlet var containerBottomOperationScreen1: UIView!
     @IBOutlet var constraintContainerBottomPoint: NSLayoutConstraint!
-    @IBOutlet var screen1MiniGraph: UIView!
+    @IBOutlet var screen1MiniGraph: Screen1RoundedGraph!
     @IBOutlet var screen1BottomMenu: UIView!
     @IBOutlet var scrollViewFromBottomPopInView: UIScrollView!
     @IBOutlet var graphFromBottomPopInView: UIView!
@@ -100,6 +101,8 @@ class ViewController: UIViewController {
     
     //MARK: - делегаты и переменные
     
+    var income: Double = 0
+    var expensive: Double = 0
     
     var tapOfActionsOperationsOpenPopUpScreen1: UITapGestureRecognizer?
     var delegateScreen2: protocolScreen2Delegate?
@@ -322,8 +325,8 @@ class ViewController: UIViewController {
     }
     
     func countingIncomesAndExpensive() {
-        var income: Double = 0
-        var expensive: Double = 0
+        income = 0
+        expensive = 0
         for n in dataArrayOfOperations.filter( { $0.amount > 0 } ) {
             income += n.amount
         }
@@ -332,10 +335,10 @@ class ViewController: UIViewController {
         }
         
         if income.truncatingRemainder(dividingBy: 1) == 0 {
-            labelAmountOfIncome.text = "$\(String(format: "%.0f", income))"
+            labelAmountOfIncomes.text = "$\(String(format: "%.0f", income))"
         }
         else {
-            labelAmountOfIncome.text = "$\(String(format: "%.2f", income))"
+            labelAmountOfIncomes.text = "$\(String(format: "%.2f", income))"
         }
         if expensive.truncatingRemainder(dividingBy: 1) == 0 {
             labelAmountOfExpenses.text = "$\(String(format: "%.0f", expensive))"
@@ -484,6 +487,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        screen1MiniGraph.setDelegateScreen1RoundedGraph(delegate: self)
+        
         screen1AllUpdate()
         
         //округление углов на первом экране
@@ -513,6 +518,11 @@ class ViewController: UIViewController {
 //MARK: - additional protocols
 
 extension ViewController: protocolScreen1Delegate{
+    
+    func returnIncomesExpenses() -> [String : Double] {
+        return ["income" : income, "expensive" : expensive]
+    }
+    
     
     func returnMonthOfDate(_ dateInternal: Date) -> String {
         let formatterPrint = DateFormatter()
@@ -592,6 +602,7 @@ extension ViewController: protocolScreen1Delegate{
         screen1TableUpdateSorting(days: daysForSorting)
         countingIncomesAndExpensive()
         changeDaysForSorting()
+        screen1MiniGraph.setNeedsDisplay()
         
     }
     
@@ -600,7 +611,7 @@ extension ViewController: protocolScreen1Delegate{
     }
     
 
-    func returnNewTableDataArray() -> [DataOfOperations] {
+    func returnDataArrayOfOperations() -> [DataOfOperations] {
         return dataArrayOfOperations
     }
     

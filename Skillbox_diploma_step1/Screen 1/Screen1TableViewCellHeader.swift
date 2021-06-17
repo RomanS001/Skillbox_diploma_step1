@@ -36,8 +36,8 @@ class Screen1TableViewCellHeader: UITableViewCell {
         let formatterPrint = DateFormatter()
         formatterPrint.timeZone = TimeZone(secondsFromGMT: 10800) //+3 час(Moscow)
         formatterPrint.dateFormat = "d MMMM YYYY"
-//        print("111: \(formatterPrint.string(from: delegateScreen1!.returnNewTableDataArray()[specCellTag].date))")
-        labelHeaderDate.text = formatterPrint.string(from: delegateScreen1!.returnNewTableDataArray()[specCellTag].date)
+//        print("111: \(formatterPrint.string(from: delegateScreen1!.returnDataArrayOfOperations()[specCellTag].date))")
+        labelHeaderDate.text = formatterPrint.string(from: delegateScreen1!.returnDataArrayOfOperations()[specCellTag].date)
     }
     
     func startCell2() {
@@ -45,8 +45,8 @@ class Screen1TableViewCellHeader: UITableViewCell {
         let formatterPrint = DateFormatter()
         formatterPrint.dateFormat = "d MMMM YYYY"
         let specVar: Int = specCellTag - delegateScreen1!.returnArrayForIncrease()[specCellTag - 1]
-        print("222: \(formatterPrint.string(from: delegateScreen1!.returnNewTableDataArray()[specVar].date))")
-        labelHeaderDate.text = formatterPrint.string(from: delegateScreen1!.returnNewTableDataArray()[specVar].date)
+        print("222: \(formatterPrint.string(from: delegateScreen1!.returnDataArrayOfOperations()[specVar].date))")
+        labelHeaderDate.text = formatterPrint.string(from: delegateScreen1!.returnDataArrayOfOperations()[specVar].date)
     }
     
     func setTag(tag: Int) {
