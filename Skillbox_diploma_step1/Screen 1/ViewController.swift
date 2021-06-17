@@ -582,7 +582,7 @@ extension ViewController: protocolScreen1Delegate{
     
     func deleteOperationInCoreData(tag: Int) {
         actionsOperationsClosePopUpScreen1()
-        try! Persistence.shared.deleteOperation(idOfObject: returnNewTableDataArray()[tag].id)
+        try! Persistence.shared.deleteOperation(idOfObject: returnDataArrayOfOperations()[tag].id)
     }
     
     
