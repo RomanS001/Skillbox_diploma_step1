@@ -31,7 +31,7 @@
 		47C4FF3525B38B0F00F97498 /* ViewControllerScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C4FF3425B38B0F00F97498 /* ViewControllerScreen2.swift */; };
 		47CB73C325B4364700638185 /* Screen2TableViewCellCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB73C225B4364700638185 /* Screen2TableViewCellCategory.swift */; };
 		47F1759925BA2D320044BD30 /* ViewControllerScreen2Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F1759825BA2D320044BD30 /* ViewControllerScreen2Container.swift */; };
-		F3C0F1F536F1FBE0328EFBF0 /* Pods_Skillbox_diploma_step1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8335EA324429EAA05CEE27F8 /* Pods_Skillbox_diploma_step1.framework */; };
+		54CC8C0D7067BC1C8B2C4605 /* Pods_Skillbox_diploma_step1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D633E17ACB804F3CB3B9F3C7 /* Pods_Skillbox_diploma_step1.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,9 +82,9 @@
 		47C4FF3425B38B0F00F97498 /* ViewControllerScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerScreen2.swift; sourceTree = "<group>"; };
 		47CB73C225B4364700638185 /* Screen2TableViewCellCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen2TableViewCellCategory.swift; sourceTree = "<group>"; };
 		47F1759825BA2D320044BD30 /* ViewControllerScreen2Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerScreen2Container.swift; sourceTree = "<group>"; };
-		60BAF65D102D3DA52C76D4CF /* Pods-Skillbox_diploma_step1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox_diploma_step1.debug.xcconfig"; path = "Target Support Files/Pods-Skillbox_diploma_step1/Pods-Skillbox_diploma_step1.debug.xcconfig"; sourceTree = "<group>"; };
-		8335EA324429EAA05CEE27F8 /* Pods_Skillbox_diploma_step1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Skillbox_diploma_step1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A62430968AEB9F0A36479A5 /* Pods-Skillbox_diploma_step1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox_diploma_step1.release.xcconfig"; path = "Target Support Files/Pods-Skillbox_diploma_step1/Pods-Skillbox_diploma_step1.release.xcconfig"; sourceTree = "<group>"; };
+		7D0EDC19C02B9FB4039679E7 /* Pods-Skillbox_diploma_step1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox_diploma_step1.debug.xcconfig"; path = "Target Support Files/Pods-Skillbox_diploma_step1/Pods-Skillbox_diploma_step1.debug.xcconfig"; sourceTree = "<group>"; };
+		C2D09214BDF27C8DD7B11A66 /* Pods-Skillbox_diploma_step1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox_diploma_step1.release.xcconfig"; path = "Target Support Files/Pods-Skillbox_diploma_step1/Pods-Skillbox_diploma_step1.release.xcconfig"; sourceTree = "<group>"; };
+		D633E17ACB804F3CB3B9F3C7 /* Pods_Skillbox_diploma_step1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Skillbox_diploma_step1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3C0F1F536F1FBE0328EFBF0 /* Pods_Skillbox_diploma_step1.framework in Frameworks */,
+				54CC8C0D7067BC1C8B2C4605 /* Pods_Skillbox_diploma_step1.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,11 +113,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		30EE6A70665E62BFC6EFEABC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D633E17ACB804F3CB3B9F3C7 /* Pods_Skillbox_diploma_step1.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		431C5A095B4677F6625F9287 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				60BAF65D102D3DA52C76D4CF /* Pods-Skillbox_diploma_step1.debug.xcconfig */,
-				9A62430968AEB9F0A36479A5 /* Pods-Skillbox_diploma_step1.release.xcconfig */,
+				7D0EDC19C02B9FB4039679E7 /* Pods-Skillbox_diploma_step1.debug.xcconfig */,
+				C2D09214BDF27C8DD7B11A66 /* Pods-Skillbox_diploma_step1.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -130,7 +138,7 @@
 				472F28A725A7319600CE1481 /* Skillbox_diploma_step1UITests */,
 				472F288425A7319500CE1481 /* Products */,
 				431C5A095B4677F6625F9287 /* Pods */,
-				97895E1DA7D44C194E0B8A01 /* Frameworks */,
+				30EE6A70665E62BFC6EFEABC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -224,14 +232,6 @@
 			path = Screen1Container;
 			sourceTree = "<group>";
 		};
-		97895E1DA7D44C194E0B8A01 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				8335EA324429EAA05CEE27F8 /* Pods_Skillbox_diploma_step1.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -239,11 +239,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 472F28AD25A7319600CE1481 /* Build configuration list for PBXNativeTarget "Skillbox_diploma_step1" */;
 			buildPhases = (
-				5C5CDD0D3642D2A2738813AF /* [CP] Check Pods Manifest.lock */,
+				9131B07C787C3DC3C9C3F251 /* [CP] Check Pods Manifest.lock */,
 				472F287F25A7319500CE1481 /* Sources */,
 				472F288025A7319500CE1481 /* Frameworks */,
 				472F288125A7319500CE1481 /* Resources */,
-				7D417C4314DC7CAB82385710 /* [CP] Embed Pods Frameworks */,
+				46437C2F99CB872D61BE5426 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -360,7 +360,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5C5CDD0D3642D2A2738813AF /* [CP] Check Pods Manifest.lock */ = {
+		46437C2F99CB872D61BE5426 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Skillbox_diploma_step1/Pods-Skillbox_diploma_step1-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Skillbox_diploma_step1/Pods-Skillbox_diploma_step1-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Skillbox_diploma_step1/Pods-Skillbox_diploma_step1-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9131B07C787C3DC3C9C3F251 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -380,23 +397,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7D417C4314DC7CAB82385710 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Skillbox_diploma_step1/Pods-Skillbox_diploma_step1-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Skillbox_diploma_step1/Pods-Skillbox_diploma_step1-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Skillbox_diploma_step1/Pods-Skillbox_diploma_step1-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -597,7 +597,7 @@
 		};
 		472F28AE25A7319600CE1481 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 60BAF65D102D3DA52C76D4CF /* Pods-Skillbox_diploma_step1.debug.xcconfig */;
+			baseConfigurationReference = 7D0EDC19C02B9FB4039679E7 /* Pods-Skillbox_diploma_step1.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -617,7 +617,7 @@
 		};
 		472F28AF25A7319600CE1481 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A62430968AEB9F0A36479A5 /* Pods-Skillbox_diploma_step1.release.xcconfig */;
+			baseConfigurationReference = C2D09214BDF27C8DD7B11A66 /* Pods-Skillbox_diploma_step1.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

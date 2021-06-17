@@ -68,7 +68,7 @@ class Persistence{
         request.returnsObjectsAsFaults = false
         do{
             let allDataLastIdOfCategory = try context.fetch(request) as! [NSManagedObject]
-            lastIdOfCategory = allDataLastIdOfCategory.first?.value(forKey: "lastIdOfCategory") as! Int + 1
+            lastIdOfCategory = allDataLastIdOfCategory.first?.value(forKey: "lastIdOfCategories") as! Int + 1
         } catch {
             print("Error in lastIdOfCategory")
             throw PersistenceErrors.updateLastIdOfCategory
@@ -166,7 +166,7 @@ class Persistence{
         }
         
         //Add Operation
-        guard let operationEntitySample = NSEntityDescription.entity(forEntityName: "ListOfOperation", in: context) else {
+        guard let operationEntitySample = NSEntityDescription.entity(forEntityName: "ListOfOperations", in: context) else {
             throw PersistenceErrors.addOperationLevel
         }
         let newEntityOperation = NSManagedObject(entity: operationEntitySample, insertInto: context)
