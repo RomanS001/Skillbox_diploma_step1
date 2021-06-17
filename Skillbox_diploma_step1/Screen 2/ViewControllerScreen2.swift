@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol protocolScreen2Delegate{
     func changeCategoryClosePopUpScreen2()
@@ -16,7 +17,7 @@ protocol protocolScreen2Delegate{
     //функции возврата
     func returnScreen2MenuArray() -> [Screen2MenuData]
     func returnDelegateScreen2TableViewCellNote() -> protocolScreen2TableViewCellNoteDelegate
-    func returnNewOperation() -> ListOfOperations
+    func returnNewOperation() -> ListOfOperationNotCoreData
     func returnDataArrayOfCategory() -> [DataOfCategories]
     func returnDelegateScreen1() -> protocolScreen1Delegate
     
@@ -83,9 +84,8 @@ class ViewControllerScreen2: UIViewController {
     let alertDatePicker = UIAlertController(title: "Select date", message: nil, preferredStyle: .actionSheet)
     let alertErrorAddNewOperation = UIAlertController(title: "Добавьте обязательные данные", message: nil, preferredStyle: .alert)
     let blurViewScreen2 =  UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-    var newOperation: ListOfOperations = ListOfOperations()
     let datePicker = UIDatePicker()
-    
+    var newOperation = ListOfOperationNotCoreData()
     
     //MARK: - переходы
     
@@ -126,10 +126,10 @@ class ViewControllerScreen2: UIViewController {
             
             if screen2StatusEditing == true{
                 print("newOperation.amount222= \(newOperation.amount)")
-                delegateScreen1?.editOperationInCoreData(newAmount: newOperation.amount, newCategory: newOperation.category!, newNote: newOperation.note!, newDate: newOperation.date!, id: Int(newOperation.id))
+                delegateScreen1?.editOperationInCoreData(newAmount: newOperation.amount, newCategory: newOperation.category, newNote: newOperation.note, newDate: newOperation.date, id: Int(newOperation.id))
             }
             else{
-                delegateScreen1?.addOperationInCoreData(newAmount: newOperation.amount, newCategory: newOperation.category!, newNote: newOperation.note!, newDate: newOperation.date!)
+                delegateScreen1?.addOperationInCoreData(newAmount: newOperation.amount, newCategory: newOperation.category, newNote: newOperation.note, newDate: newOperation.date)
             }
             
             delegateScreen1?.screen1AllUpdate()
@@ -465,10 +465,10 @@ extension ViewControllerScreen2: protocolScreen2Delegate{
         }
 
         //set Date
-        datePicker.date = newOperation.date!
+        datePicker.date = newOperation.date
         
         //set Note
-        delegateScreen2TableViewCellNote?.setNoteViewText(newText: self.newOperation.note!)
+        delegateScreen2TableViewCellNote?.setNoteViewText(newText: self.newOperation.note)
         print("newOperation.note= \(newOperation.note)")
 
         labelScreen2Header.text = "Edit"
@@ -518,11 +518,12 @@ extension ViewControllerScreen2: protocolScreen2Delegate{
     
     
     func setIDInNewOperation(id: Int) {
-        newOperation.id = Int64(id)
+        newOperation.id = id
     }
     
     
-    func returnNewOperation() -> ListOfOperations{
+    func returnNewOperation() -> ListOfOperationNotCoreData{
+        print("return new operation= \(newOperation)")
         return newOperation
     }
     

@@ -7,7 +7,7 @@
     </entity>
     <entity name="ListOfOperations" representedClassName="ListOfOperations" syncable="YES" codeGenerationType="class">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="category" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="date" optional="YES" attributeType="Date"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0"/>
         <attribute name="note" optional="YES" attributeType="String"/>
@@ -22,7 +22,7 @@
     </entity>
     <elements>
         <element name="Category" positionX="-113.1754760742188" positionY="-270.3391418457031" width="128" height="88"/>
-        <element name="ListOfOperations" positionX="83.07989501953125" positionY="-300.8646850585938" width="128" height="118"/>
+        <element name="ListOfOperations" positionX="83.07989501953125" positionY="-300.8646850585938" width="128" height="104"/>
         <element name="Person" positionX="-298.5135803222656" positionY="-460.7606201171875" width="128" height="133"/>
     </elements>
 </model>

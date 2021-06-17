@@ -9,6 +9,15 @@ import UIKit
 import Foundation
 import CoreData
 
+class ListOfOperationNotCoreData {
+    var amount: Double = 0
+    var category: String = ""
+    var note: String = ""
+    var date: Date = Date.init(timeIntervalSince1970: TimeInterval(0))
+    var id: Int = 0
+}
+
+
 class Persistence{
     
     static let shared = Persistence()

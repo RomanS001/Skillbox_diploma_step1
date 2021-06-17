@@ -51,7 +51,7 @@ class Screen2TableViewCellDate: UITableViewCell {
         dateFormatter.timeStyle = .none
 
         if delegateScreen2?.returnNewOperation().date != Date.init(timeIntervalSince1970: TimeInterval(0)) {
-            labelSelectDate.text = dateFormatter.string(from: delegateScreen2!.returnNewOperation().date!)
+            labelSelectDate.text = dateFormatter.string(from: delegateScreen2!.returnNewOperation().date)
             labelSelectDate.textColor = .black
         }
         else{
