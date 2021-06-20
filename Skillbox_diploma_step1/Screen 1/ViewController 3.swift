@@ -16,13 +16,22 @@ protocol protocolScreen1Delegate{
     func actionsOperationsClosePopUpScreen1() //закрывает PopUp-окно конкретной операции
     func editOperation(tag: Int) //переход в редактирование выбранной операции на втором экране
     
+<<<<<<< HEAD
     //CoreData
     func addOperationInCoreData(newAmount: Double, newCategory: String, newNote: String, newDate: Date)
     func editOperationInCoreData(newAmount: Double, newCategory: String, newNote: String, newDate: Date, id: Int)
     func deleteOperationInCoreData(tag: Int)
     func deleteCategoryInCoreData(id: Int)
     func editCategoryInCoreData(newName: String, newIcon: String, id: Int)
+=======
+    //realm
+    func addOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date)
+    func editOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date, id: Int)
+    func deleteOperationInRealm(tag: Int)
+    func deleteCategoryInRealm(id: Int)
+    func editCategoryInRealm(newName: String, newIcon: String, id: Int)
     func miniGraphStarterBackground(status: Bool)
+>>>>>>> 2fa6d58 (General update.)
     
     //функции возврата
     func returnDataArrayOfOperations() -> [DataOfOperations] //возвращает данные, которые отображаются в данный момент
