@@ -34,27 +34,37 @@ protocol protocolScreen1RoundedGraph {
         let localData = deligateScreen1?.returnIncomesExpenses()
         var incomesExpensesRatio: Double = 1
         
-        incomesExpensesRatio = localData!.isEmpty ? 0 : localData!["income"]! / (localData!["income"]! - localData!["expensive"]!)
+        if localData!["income"] == 0 && localData!["expensive"] != 0 {
+            incomesExpensesRatio = -1
+        } else {
+            incomesExpensesRatio = localData!.isEmpty ? 0 : localData!["income"]! / (localData!["income"]! - localData!["expensive"]!)
+        }
         
         print("incomesExpensesRatio= \(incomesExpensesRatio)")
         
-        let center = CGPoint(x: bounds.width/2, y: bounds.height/2)
-        let radius = max(bounds.width, bounds.height)
-        
-        let startAngleIncome: CGFloat = .pi / 2
-        let startAngleExpenses: CGFloat = .pi * 2 * CGFloat(incomesExpensesRatio) + startAngleIncome
-        
-        let pathIncome = UIBezierPath(arcCenter: center, radius: radius/2-Constants.arcWidth/2, startAngle: startAngleIncome, endAngle: startAngleExpenses, clockwise: true)
-        
-        pathIncome.lineWidth = Constants.lineWidth
-        incomesColor.setStroke()
-        pathIncome.stroke()
-        
-        let pathExpenses = UIBezierPath(arcCenter: center, radius: radius/2-Constants.arcWidth/2, startAngle: startAngleExpenses, endAngle: startAngleIncome, clockwise: true)
-        pathExpenses.lineWidth = Constants.lineWidth
-        expensesColor.setStroke()
-        pathExpenses.stroke()
+        if localData!.isEmpty {
+            deligateScreen1?.miniGraphStarterBackground(status: false)
+        } else {
+            deligateScreen1?.miniGraphStarterBackground(status: true)
+            let center = CGPoint(x: bounds.width/2, y: bounds.height/2)
+            let radius = max(bounds.width, bounds.height)
+            
+            let startAngleIncome: CGFloat = .pi / 2
+            let startAngleExpenses: CGFloat = .pi * 2 * CGFloat(incomesExpensesRatio) + startAngleIncome
+            
+            let pathIncome = UIBezierPath(arcCenter: center, radius: radius/2-Constants.arcWidth/2, startAngle: startAngleIncome, endAngle: startAngleExpenses, clockwise: true)
+            
+            pathIncome.lineWidth = Constants.lineWidth
+            incomesColor.setStroke()
+            pathIncome.stroke()
+            
+            let pathExpenses = UIBezierPath(arcCenter: center, radius: radius/2-Constants.arcWidth/2, startAngle: startAngleExpenses, endAngle: startAngleIncome, clockwise: true)
+            pathExpenses.lineWidth = Constants.lineWidth
+            expensesColor.setStroke()
+            pathExpenses.stroke()
 
+        }
+        
     }
     
     

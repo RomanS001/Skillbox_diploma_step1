@@ -122,9 +122,33 @@
                                                     <constraint firstAttribute="width" constant="180" id="MYg-rn-oIi"/>
                                                 </constraints>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G5H-lD-gc3">
+                                                <rect key="frame" x="0.0" y="30" width="180" height="140"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавьте операцию для отображения" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ir5-Vs-CdP">
+                                                        <rect key="frame" x="15" y="-5" width="150" height="150"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="150" id="Qzk-oi-kKg"/>
+                                                            <constraint firstAttribute="height" constant="150" id="Tgb-Ec-nm5"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                        <color key="textColor" name="InterfaceColorGreen2"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="Ir5-Vs-CdP" firstAttribute="centerX" secondItem="G5H-lD-gc3" secondAttribute="centerX" id="4lT-0J-fah"/>
+                                                    <constraint firstItem="Ir5-Vs-CdP" firstAttribute="centerY" secondItem="G5H-lD-gc3" secondAttribute="centerY" id="WAe-H4-vTv"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="G5H-lD-gc3" firstAttribute="leading" secondItem="zd6-bW-CPK" secondAttribute="leading" id="6Wh-Vp-6p2"/>
+                                            <constraint firstItem="G5H-lD-gc3" firstAttribute="top" secondItem="zd6-bW-CPK" secondAttribute="top" constant="30" id="8jc-6L-79E"/>
                                             <constraint firstItem="Ths-aj-OB7" firstAttribute="centerY" secondItem="zd6-bW-CPK" secondAttribute="centerY" id="DZZ-2r-SYc"/>
+                                            <constraint firstAttribute="bottom" secondItem="G5H-lD-gc3" secondAttribute="bottom" constant="30" id="STi-0o-v5v"/>
+                                            <constraint firstAttribute="trailing" secondItem="G5H-lD-gc3" secondAttribute="trailing" id="bS9-Mr-YUC"/>
                                             <constraint firstAttribute="width" constant="180" id="n4k-VJ-C6I"/>
                                             <constraint firstItem="Ths-aj-OB7" firstAttribute="centerX" secondItem="zd6-bW-CPK" secondAttribute="centerX" id="tzY-jz-YCF"/>
                                         </constraints>
@@ -530,6 +554,7 @@
                         <outlet property="labelMothly" destination="0g6-AG-eVw" id="bMg-Fk-7aX"/>
                         <outlet property="labelWeekly" destination="M2c-Mq-Y7j" id="Ei7-EA-8zM"/>
                         <outlet property="labelYearly" destination="IA8-wU-yCh" id="kzM-sf-JZL"/>
+                        <outlet property="miniGraphStarterBackground" destination="G5H-lD-gc3" id="YS7-ob-ixJ"/>
                         <outlet property="screen1BottomMenu" destination="0a3-ee-7ce" id="jJA-4P-ogQ"/>
                         <outlet property="screen1MiniGraph" destination="Ths-aj-OB7" id="48E-LS-ize"/>
                         <outlet property="scrollViewFromBottomPopInView" destination="T9E-30-cZk" id="dXl-Jy-uf3"/>
@@ -1540,10 +1565,10 @@
             <color red="0.43799999356269836" green="0.76700001955032349" blue="0.77799999713897705" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="InterfaceColorGreen2">
-            <color red="0.25594794749999999" green="0.71197980640000003" blue="0.030364310370000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.25600001215934753" green="0.71200001239776611" blue="0.029999999329447746" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="InterfaceColorRed">
-            <color red="0.96845060589999998" green="0.25362825389999999" blue="0.2239157259" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.96799999475479126" green="0.25400000810623169" blue="0.22400000691413879" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="InterfaceColorWhite">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
