@@ -75,6 +75,7 @@ extension ViewControllerScreen1ContainerOperation: protocolScreen1ContainerOpera
         
         specCellTag = tag
         specVar = specCellTag - delegateScreen1!.returnArrayForIncrease()[specCellTag]
+        print("Version2!_tagInOperation= \(tag), specVar= \(specVar)")
         
         //Отображения category
         labelCategory.text = delegateScreen1!.returnDataArrayOfOperations()[specVar].category

@@ -146,7 +146,7 @@ class ViewController: UIViewController {
             delegateScreen2?.setCategoryInNewOperation(category: dataArrayOfOperations[tagForEdit].category)
             delegateScreen2?.setDateInNewOperation(date: dataArrayOfOperations[tagForEdit].date)
             delegateScreen2?.setNoteInNewOperation(note: dataArrayOfOperations[tagForEdit].note)
-            delegateScreen2?.setIDInNewOperation(id: tagForEdit)
+            delegateScreen2?.setIDInNewOperation(id: dataArrayOfOperations[tagForEdit].id)
         }
         
     }
@@ -459,6 +459,7 @@ class ViewController: UIViewController {
         dataArrayOfOperationsOriginal = []
         for n in coreDataOperations! {
             dataArrayOfOperationsOriginal.append(DataOfOperations(amount1: n.value(forKey: "amount") as! Double, category1: n.value(forKey: "category") as! String, note1: n.value(forKey: "note") as! String, date1: n.value(forKey: "date") as! Date, id1: n.value(forKey: "id") as! Int))
+            print("Version2!_dataArrayOfOperationsOriginal.amount = \(n.value(forKey: "amount") as! Double), name= \(n.value(forKey: "category") as! String), id= \(n.value(forKey: "id") as! Int), date= \(n.value(forKey: "date") as! Date)")
         }
 //        daysForSorting = Persistence.shared.returnDaysForSorting()
         print("daysForSorting in screen1DataReceive= \(daysForSorting)")

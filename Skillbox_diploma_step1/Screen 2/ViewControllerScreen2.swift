@@ -127,6 +127,7 @@ class ViewControllerScreen2: UIViewController {
             if screen2StatusEditing == true{
                 print("newOperation.amount222= \(newOperation.amount)")
                 delegateScreen1?.editOperationInCoreData(newAmount: newOperation.amount, newCategory: newOperation.category, newNote: newOperation.note, newDate: newOperation.date, id: Int(newOperation.id))
+                print("Version2!_newOperation_Id= \(Int(newOperation.id))")
             }
             else{
                 delegateScreen1?.addOperationInCoreData(newAmount: newOperation.amount, newCategory: newOperation.category, newNote: newOperation.note, newDate: newOperation.date)
@@ -317,9 +318,9 @@ class ViewControllerScreen2: UIViewController {
             print("iteration for - screen2DataReceive")
         }
         print("finish screen2DataReceive")
-//        for n in dataArrayOfCategory {
-//            print("dataArrayOfCategory= \(n.name)")
-//        }
+        for n in dataArrayOfCategory {
+            print("dataArrayOfCategory= \(n.name), id= \(n.id)")
+        }
     }
     
     var screen2MenuArray: [Screen2MenuData] = []

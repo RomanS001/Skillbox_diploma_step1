@@ -52,6 +52,9 @@ class ViewControllerScreen2Container: UIViewController {
         
         alertErrorAddNewCategory.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         
+        print("returnDataArrayOfCategory().count= \(delegateScreen2?.returnDataArrayOfCategory().count)")
+        print("returnDataArrayOfCategory()= \(delegateScreen2?.returnDataArrayOfCategory())")
+        
     }
     
 }

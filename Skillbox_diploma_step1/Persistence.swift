@@ -69,6 +69,8 @@ class Persistence{
         do{
             let allDataLastIdOfCategory = try context.fetch(request) as! [NSManagedObject]
             lastIdOfCategory = allDataLastIdOfCategory.first?.value(forKey: "lastIdOfCategories") as! Int + 1
+            allDataLastIdOfCategory.first?.setValue(lastIdOfCategory, forKey: "lastIdOfCategories")
+            try context.save()
         } catch {
             print("Error in lastIdOfCategory")
             throw PersistenceErrors.updateLastIdOfCategory
@@ -154,12 +156,15 @@ class Persistence{
         }
         let context = appDelegate.persistentContainer.viewContext
         
-        //Update lastIdOfCategory
+        //Update lastIdOfOperation
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
         request.returnsObjectsAsFaults = false
         do{
             let allDataPerson = try context.fetch(request) as! [NSManagedObject]
             lastIdOfOperations = allDataPerson.first?.value(forKey: "lastIdOfOperations") as! Int + 1
+            allDataPerson.first?.setValue(lastIdOfOperations, forKey: "lastIdOfOperations")
+            try context.save()
+
         } catch {
             print("Error in lastIdOfOperations")
             throw PersistenceErrors.updateLastIdOfOperations
