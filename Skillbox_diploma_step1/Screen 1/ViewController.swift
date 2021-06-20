@@ -355,16 +355,20 @@ class ViewController: UIViewController {
         if dataArrayOfOperations.count == 0 { return 1 }
         arrayForIncrease = [1]
         var previousDay: Int = 0
+        var previousMonth: Int = 0
         var counter: Int = 0
         
         for x in dataArrayOfOperations {
-            if Calendar.current.component(.day, from: x.date) != previousDay{
+            if Calendar.current.component(.day, from: x.date) != previousDay || Calendar.current.component(.month, from: x.date) != previousMonth{
+                print("counter111")
                 if counter != 0 {
+                    print("counter222")
                     //Расчёт множителя, который компенсирует наличие header'ов в таблице
                     arrayForIncrease.append(arrayForIncrease.last!)
                     arrayForIncrease.append(arrayForIncrease.last! + 1)
                 }
                 previousDay = Calendar.current.component(.day, from: x.date)
+                previousMonth = Calendar.current.component(.month, from: x.date)
             }
             else {
                 arrayForIncrease.append(arrayForIncrease.last!)
@@ -372,6 +376,7 @@ class ViewController: UIViewController {
             counter += 1
         }
         arrayForIncrease.append(arrayForIncrease.last!)
+        print("arrayForIncrease= \(arrayForIncrease)")
         graphDataArrayCalculating(dataArrayOfOperationsInternal: dataArrayOfOperations)
         
         return arrayForIncrease.count
