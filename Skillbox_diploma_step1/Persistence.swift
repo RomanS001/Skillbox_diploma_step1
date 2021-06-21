@@ -6,32 +6,32 @@
 //
 
 import Foundation
-import RealmSwift
+//import RealmSwift
 
 
-class Person: Object{
-    @objc dynamic var name: String = ""
-    @objc dynamic var surname: String = ""
-    @objc dynamic var daysForSorting: Int = 0
-    @objc dynamic var lastIdOfOperations: Int = -1
-    @objc dynamic var lastIdOfCategories: Int = -1
-    var listOfCategory = List<Category>()
+class Person{
+    var name: String = ""
+    var surname: String = ""
+    var daysForSorting: Int = 0
+    var lastIdOfOperations: Int = -1
+    var lastIdOfCategories: Int = -1
+    var listOfCategory = [Category]()
 }
 
 
-class ListOfOperations: Object{
-    @objc dynamic var amount: Double = 0
-    @objc dynamic var category: String = ""
-    @objc dynamic var note: String = ""
-    @objc dynamic var date: Date = Date.init(timeIntervalSince1970: TimeInterval(0))
-    @objc dynamic var id: Int = 0
+class ListOfOperations{
+    var amount: Double = 0
+    var category: String = ""
+    var note: String = ""
+    var date: Date = Date.init(timeIntervalSince1970: TimeInterval(0))
+    var id: Int = 0
 }
 
 
-class Category: Object{
-    @objc dynamic var name: String = ""
-    @objc dynamic var icon: String = ""
-    @objc dynamic var id: Int = 0
+class Category{
+    var name: String = ""
+    var icon: String = ""
+    var id: Int = 0
 }
 
 
@@ -39,7 +39,14 @@ class Persistence{
     
     
     static let shared = Persistence()
-    private let realm = try! Realm()
+    private let kPersonKey = "Persistence.kPersonKey"
+    private let kLististOfOperationKey = "Persistence.kLististOfOperationKey"
+    
+    var mainPerson: Person?{
+        set { UserDefaults.standard.set(newValue, forKey: kPersonKey) }
+        get { return UserDefaults.standard. string(forKey: kLististOfOperationKey)}
+    }
+    var mainLististOfOperation: [ListOfOperations]?
     
     
     //MARK: - категории
