@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import CoreData
+//import CoreData
 
 protocol protocolScreen2Delegate{
     func changeCategoryClosePopUpScreen2()
