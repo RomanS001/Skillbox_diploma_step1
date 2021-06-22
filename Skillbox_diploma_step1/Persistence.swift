@@ -6,16 +6,35 @@
 //
 
 import Foundation
-//import RealmSwift
 
 
-class Person{
+protocol ObjectSavable {
+    func setObject<Object>(_ object: Object, forKey: String) throws where Object: Encodable
+    func getObject<Object>(forKey: String, castTo type: Object.Type) throws -> Object where Object: Decodable
+}
+
+
+enum ObjectSavableError: String, LocalizedError {
+    case unableToEncode = "Unable to encode object into data"
+    case noValue = "No data object found for the given key"
+    case unableToDecode = "Unable to decode object into given type"
+    case returnRealmDataCategories
+    case returnRealmDataPerson
+    case addCategory
+    
+    var errorDescription: String? {
+        rawValue
+    }
+}
+
+
+class Person: Codable{
     var name: String = ""
     var surname: String = ""
     var daysForSorting: Int = 0
     var lastIdOfOperations: Int = -1
     var lastIdOfCategories: Int = -1
-    var listOfCategory = [Category]()
+    var listOfCategory: [Category] = []
 }
 
 
@@ -28,38 +47,66 @@ class ListOfOperations{
 }
 
 
-class Category{
+class Category: Codable{
     var name: String = ""
     var icon: String = ""
     var id: Int = 0
+    
+    init(newName: String, newIcon: String, newID: Int) {
+        name = newName
+        icon = newIcon
+        id = newID
+    }
 }
 
 
 class Persistence{
     
+    private let kPersonKey: String = "Persistence.kPersonKey"
+    private let kCategoryKey: String = "Persistence.kCategoryKey"
     
-    static let shared = Persistence()
-    private let kPersonKey = "Persistence.kPersonKey"
-    private let kLististOfOperationKey = "Persistence.kLististOfOperationKey"
-    
-    var mainPerson: Person?{
-        set { UserDefaults.standard.set(newValue, forKey: kPersonKey) }
-        get { return UserDefaults.standard. string(forKey: kLististOfOperationKey)}
-    }
-    var mainLististOfOperation: [ListOfOperations]?
+    var person: Person? //Аккаунт всегда один
+    var categories: [Category]? //Категорий может быть много, поэтому массив
     
     
     //MARK: - категории
     
-    func returnRealmDataCategories() -> Results<Category>{
-        let allCategories = realm.objects(Category.self)
-        return allCategories
+    func returnUserDefaultsDataCategories() -> [Category] {
+        let userDefaults = UserDefaults.standard
+        do {
+            categories = try userDefaults.getObject(forKey: kCategoryKey, castTo: [Category].self)
+            return categories!
+        } catch {
+            ObjectSavableError.returnRealmDataCategories
+        }
     }
     
+    
+    func returnUserDefaultsDataPerson() -> Person {
+        let userDefaults = UserDefaults.standard
+        do {
+            person = try userDefaults.getObject(forKey: kPersonKey, castTo: Person.self)
+            return person!
+        } catch {
+            ObjectSavableError.returnRealmDataPerson
+        }
+    }
+
+    
     func addCategory(name: String, icon: String){
-        let category = Category()
-        category.name = name
-        category.icon = icon
+        let userDefaults = UserDefaults.standard
+        do {
+            categories = returnUserDefaultsDataCategories()
+            person = returnUserDefaultsDataPerson()
+            
+            categories?.append(Category(newName: name, newIcon: icon, newID: person!.lastIdOfCategories + 1))
+            try userDefaults.setObject(categories, forKey: "kCategoryKey")
+        } catch {
+            ObjectSavableError.addCategory
+        }
+  
+        
+        
         category.id = realm.objects(Person.self).first!.lastIdOfCategories + 1
         try! realm.write{
             realm.add(category)
@@ -163,5 +210,30 @@ class Persistence{
         }
     }
     
+}
+
+
+extension UserDefaults: ObjectSavable{
+    
+    func setObject<Object>(_ object: Object, forKey: String) throws where Object : Encodable {
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(object)
+            set(data, forKey: forKey)
+        } catch {
+            throw ObjectSavableError.unableToEncode
+        }
+    }
+    
+    func getObject<Object>(forKey: String, castTo type: Object.Type) throws -> Object where Object: Decodable {
+        guard let data = data(forKey: forKey) else { throw ObjectSavableError.noValue }
+        let decoder = JSONDecoder()
+        do {
+            let object = try decoder.decode(type, from: data)
+            return object
+        } catch {
+            throw ObjectSavableError.unableToDecode
+        }
+    }
     
 }
