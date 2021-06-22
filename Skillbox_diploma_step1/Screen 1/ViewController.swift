@@ -7,7 +7,6 @@
 
 
 import UIKit
-import RealmSwift
 
 protocol protocolScreen1Delegate{
     func findAmountOfHeaders() //подсчёт заголовков с датами в основнй таблице экрана

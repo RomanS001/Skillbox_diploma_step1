@@ -4,7 +4,6 @@ platform :ios, '14.0'
 use_frameworks!
 
 target 'Skillbox_diploma_step1' do
-pod 'RealmSwift'
 pod 'SimpleCheckbox'
 
 end
