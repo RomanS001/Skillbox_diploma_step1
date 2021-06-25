@@ -26,6 +26,9 @@ enum ObjectSavableError: String, LocalizedError {
     case updateCategory
     case addOperations
     case updateOperations
+    case deleteOperation
+    case updateDaysForSorting
+    case returnDaysForSorting
     
     var errorDescription: String? {
         rawValue
@@ -43,7 +46,7 @@ class Person: Codable{
 }
 
 
-class ListOfOperations: Codable{
+class UserDefaultOperation: Codable{
     var amount: Double = 0
     var category: String = ""
     var note: String = ""
@@ -75,11 +78,13 @@ class Category: Codable{
 
 class Persistence{
     
+    static let shared = Persistence()
+    
     private let kPersonKey: String = "Persistence.kPersonKey"
     private let kListOfOperationsKey: String = "Persistence.kListOfOperationsKey"
     
     var person: Person? //Аккаунт всегда один
-    var listOfOperations: [ListOfOperations]?
+    var listOfOperations: [UserDefaultOperation]?
     
     
     //MARK: - категории
@@ -94,22 +99,24 @@ class Persistence{
     }
     
     
-    func returnUserDefaultsDataPerson() -> Person {
+    func returnUserDefaultsDataPerson() -> Person? {
         do {
             person = try UserDefaults.standard.getObject(forKey: kPersonKey, castTo: Person.self)
             return person!
         } catch {
             ObjectSavableError.returnRealmDataPerson
+            return nil
         }
     }
     
     
-    func returnUserDefaultsDataListOfOperations() -> [ListOfOperations] {
+    func returnUserDefaultsDataListOfOperations() -> [UserDefaultOperation]? {
         do {
-            listOfOperations = try UserDefaults.standard.getObject(forKey: kListOfOperationsKey, castTo: [ListOfOperations].self)
+            listOfOperations = try UserDefaults.standard.getObject(forKey: kListOfOperationsKey, castTo: [UserDefaultOperation].self)
             return listOfOperations!
         } catch {
             ObjectSavableError.returnRealmDataListOfOperations
+            return nil
         }
     }
 
@@ -171,7 +178,7 @@ class Persistence{
             person = returnUserDefaultsDataPerson()
             listOfOperations = returnUserDefaultsDataListOfOperations()
             
-            listOfOperations!.append(ListOfOperations(newAmount: amount, newCategory: category, newNote: note, newDate: date, newID: person!.lastIdOfOperations + 1))
+            listOfOperations!.append(UserDefaultOperation(newAmount: amount, newCategory: category, newNote: note, newDate: date, newID: person!.lastIdOfOperations + 1))
             person?.lastIdOfOperations = person!.lastIdOfOperations + 1
             try UserDefaults.standard.setObject(listOfOperations, forKey: kListOfOperationsKey)
             try UserDefaults.standard.setObject(person, forKey: kPersonKey)
@@ -182,7 +189,6 @@ class Persistence{
     
     
     func updateOperations(newAmount: Double, newCategory: String, newNote: String, newDate: Date, idOfObject: Int){
-        
         
         do {
             listOfOperations = returnUserDefaultsDataListOfOperations()
@@ -201,50 +207,57 @@ class Persistence{
         }
     }
     
-        
-    func getRealmDataOperations() -> [ListOfOperations]{
-        listOfOperations = returnUserDefaultsDataListOfOperations()
-        return listOfOperations!
-    }
-    
 
     func deleteOperation(idOfObject: Int){
-        let particularOperations = realm.objects(ListOfOperations.self).filter("id == \(idOfObject)")
-//        var index: Int? = allOperations.index(of: particularObject) ?? nil
-        print("idOfObject for delete= \(idOfObject)")
-        try! realm.write{
-            realm.delete(particularOperations)
+        
+        do {
+            listOfOperations = returnUserDefaultsDataListOfOperations()
+            for n in 0...listOfOperations!.count {
+                if listOfOperations![n].id == idOfObject {
+                    listOfOperations!.remove(at: n)
+                    try UserDefaults.standard.setObject(listOfOperations, forKey: kListOfOperationsKey)
+                    return
+                }
+            }
+        } catch {
+            ObjectSavableError.deleteOperation
         }
+        
     }
     
     
     //MARK: - личные данные
     
     func updateDaysForSorting(daysForSorting: Int){
-        let person = realm.objects(Person.self).first
         
-        try! realm.write{
-            person!.daysForSorting = daysForSorting
+        do {
+            person = returnUserDefaultsDataPerson()
+            person?.daysForSorting = daysForSorting
+            try UserDefaults.standard.setObject(person, forKey: kPersonKey)
+        } catch {
+            ObjectSavableError.updateDaysForSorting
         }
+        
     }
     
         
     func returnDaysForSorting() -> Int{
-        print("old person returned")
-        let person = realm.objects(Person.self).first
-        if person?.daysForSorting != nil {
-            return person!.daysForSorting
-        }
-        else{
-            print("newPerson added")
-            let newPerson = Person()
-            newPerson.daysForSorting = 30
-            try! realm.write{
-                realm.add(newPerson)
+        do {
+            person = returnUserDefaultsDataPerson()
+            if person?.daysForSorting != nil {
+                return person!.daysForSorting
+            } else {
+                person?.daysForSorting = 30
+                try UserDefaults.standard.setObject(person, forKey: kPersonKey)
+                return person!.daysForSorting
             }
-            return newPerson.daysForSorting
+            
+        } catch {
+            ObjectSavableError.returnDaysForSorting
+            return 30
         }
     }
+    
     
 }
 

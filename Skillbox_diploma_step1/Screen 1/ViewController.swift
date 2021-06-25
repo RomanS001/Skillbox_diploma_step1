@@ -442,7 +442,11 @@ class ViewController: UIViewController {
     
     func screen1DataReceive(){
         dataArrayOfOperationsOriginal = []
-        for n in Persistence.shared.getRealmDataOperations(){
+        guard let operations = Persistence.shared.returnUserDefaultsDataListOfOperations() else {
+            print("Error in screen1DataReceive")
+            return
+        }
+        for n in operations{
             dataArrayOfOperationsOriginal.append(DataOfOperations(amount1: n.amount, category1: n.category, note1: n.note, date1: n.date, id1: n.id))
         }
         daysForSorting = Persistence.shared.returnDaysForSorting()
@@ -555,7 +559,7 @@ extension ViewController: protocolScreen1Delegate{
     
     func editCategoryInRealm(newName: String, newIcon: String, id: Int) {
         print("editCategoryInRealm")
-        Persistence.shared.updateCategory(name: newName, icon: newIcon, idOfObject: delegateScreen2!.returnDataArrayOfCategory()[id].id)
+        Persistence.shared.updateCategory(newName: newName, newIcon: newIcon, idOfObject: delegateScreen2!.returnDataArrayOfCategory()[id].id)
     }
     
     
@@ -584,7 +588,7 @@ extension ViewController: protocolScreen1Delegate{
     
     func editOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date, id: Int) {
         print("editOperationInRealm")
-        Persistence.shared.updateOperations(amount: newAmount, category: newCategory, note: newNote, date: newDate, idOfObject: id)
+        Persistence.shared.updateOperations(newAmount: newAmount, newCategory: newCategory, newNote: newNote, newDate: newDate, idOfObject: id)
     }
     
     

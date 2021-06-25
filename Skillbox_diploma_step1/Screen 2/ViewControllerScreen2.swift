@@ -16,7 +16,7 @@ protocol protocolScreen2Delegate{
     //функции возврата
     func returnScreen2MenuArray() -> [Screen2MenuData]
     func returnDelegateScreen2TableViewCellNote() -> protocolScreen2TableViewCellNoteDelegate
-    func returnNewOperation() -> ListOfOperations
+    func returnNewOperation() -> UserDefaultOperation
     func returnDataArrayOfCategory() -> [DataOfCategories]
     func returnDelegateScreen1() -> protocolScreen1Delegate
     
@@ -83,7 +83,10 @@ class ViewControllerScreen2: UIViewController {
     let alertDatePicker = UIAlertController(title: "Select date", message: nil, preferredStyle: .actionSheet)
     let alertErrorAddNewOperation = UIAlertController(title: "Добавьте обязательные данные", message: nil, preferredStyle: .alert)
     let blurViewScreen2 =  UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-    var newOperation: ListOfOperations = ListOfOperations()
+    
+    var newOperation = UserDefaultOperation(newAmount: 0, newCategory: "", newNote: "", newDate: Date.init(timeIntervalSince1970: TimeInterval(0)), newID: 0)
+//    var newOperation = UserDefaultOperation()
+    
     let datePicker = UIDatePicker()
     
     
@@ -312,7 +315,7 @@ class ViewControllerScreen2: UIViewController {
     
     func screen2DataReceive(){
         dataArrayOfCategory = []
-        for n in Persistence.shared.returnRealmDataCategories(){
+        for n in Persistence.shared.returnUserDefaultsDataCategories(){
             dataArrayOfCategory.append(DataOfCategories(name1: n.name, icon1: n.icon, id1: n.id))
         }
 //        for n in dataArrayOfCategory {
@@ -520,7 +523,7 @@ extension ViewControllerScreen2: protocolScreen2Delegate{
     }
     
     
-    func returnNewOperation() -> ListOfOperations{
+    func returnNewOperation() -> UserDefaultOperation{
         return newOperation
     }
     
