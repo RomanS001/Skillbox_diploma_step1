@@ -314,6 +314,7 @@ class ViewControllerScreen2: UIViewController {
     //MARK: - данные
     
     func screen2DataReceive(){
+        print("screen2DataReceive")
         dataArrayOfCategory = []
         for n in Persistence.shared.returnUserDefaultsDataCategories(){
             dataArrayOfCategory.append(DataOfCategories(name1: n.name, icon1: n.icon, id1: n.id))

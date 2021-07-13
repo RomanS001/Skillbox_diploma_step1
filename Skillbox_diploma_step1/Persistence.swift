@@ -92,8 +92,15 @@ class Persistence{
     func returnUserDefaultsDataCategories() -> [Category] {
         do {
             person = returnUserDefaultsDataPerson()
-            return person!.listOfCategory
+            if person == nil {
+                print("returnUserDefaultsDataCategories111")
+                return []
+            } else {
+                print("returnUserDefaultsDataCategories222")
+                return person!.listOfCategory
+            }
         } catch {
+            print("returnUserDefaultsDataCategories333")
             ObjectSavableError.returnRealmDataCategories
         }
     }
