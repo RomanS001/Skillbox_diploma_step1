@@ -20,6 +20,7 @@ enum ObjectSavableError: String, LocalizedError {
     case unableToDecode = "Unable to decode object into given type"
     case returnRealmDataCategories
     case returnRealmDataPerson
+    case returnRealmDataPerson2
     case addCategory
     case deleteCategory
     case returnRealmDataListOfOperations
@@ -29,6 +30,7 @@ enum ObjectSavableError: String, LocalizedError {
     case deleteOperation
     case updateDaysForSorting
     case returnDaysForSorting
+    case createUserDefaultsDataPerson
     
     var errorDescription: String? {
         rawValue
@@ -43,6 +45,16 @@ class Person: Codable{
     var lastIdOfOperations: Int = -1
     var lastIdOfCategories: Int = -1
     var listOfCategory: [Category] = []
+    
+//    init(newName: String, newSurname: String, newDaysForSorting: Int, newLastIdOfOperations: Int, newLastIdOfCategories: Int, newListOfCategory: [Category]) {
+//        name = newName
+//        surname = newSurname
+//        daysForSorting = newDaysForSorting
+//        lastIdOfOperations = newLastIdOfOperations
+//        lastIdOfCategories = newLastIdOfCategories
+//        listOfCategory = newListOfCategory
+//    }
+
 }
 
 
@@ -102,17 +114,6 @@ class Persistence{
         } catch {
             print("returnUserDefaultsDataCategories333")
             ObjectSavableError.returnRealmDataCategories
-        }
-    }
-    
-    
-    func returnUserDefaultsDataPerson() -> Person? {
-        do {
-            person = try UserDefaults.standard.getObject(forKey: kPersonKey, castTo: Person.self)
-            return person!
-        } catch {
-            ObjectSavableError.returnRealmDataPerson
-            return nil
         }
     }
     
@@ -184,6 +185,9 @@ class Persistence{
         do {
             person = returnUserDefaultsDataPerson()
             listOfOperations = returnUserDefaultsDataListOfOperations()
+            if listOfOperations == nil {
+                listOfOperations = []
+            }
             
             listOfOperations!.append(UserDefaultOperation(newAmount: amount, newCategory: category, newNote: note, newDate: date, newID: person!.lastIdOfOperations + 1))
             person?.lastIdOfOperations = person!.lastIdOfOperations + 1
@@ -234,6 +238,49 @@ class Persistence{
     
     
     //MARK: - личные данные
+    
+    func createUserDefaultsDataPerson() -> Person? {
+    
+        do {
+            let newPerson = Person()
+            try UserDefaults.standard.setObject(newPerson, forKey: kPersonKey)
+        } catch {
+            ObjectSavableError.createUserDefaultsDataPerson
+        }
+        
+        do {
+            print("createUserDefaultsDataPerson111")
+            person = try UserDefaults.standard.getObject(forKey: kPersonKey, castTo: Person.self)
+            return person!
+        } catch {
+            print("createUserDefaultsDataPerson222")
+            ObjectSavableError.createUserDefaultsDataPerson
+            return nil
+        }
+    }
+    
+    
+    func returnUserDefaultsDataPerson() -> Person? {
+        do {
+            print("returnUserDefaultsDataPerson111")
+            person = try UserDefaults.standard.getObject(forKey: kPersonKey, castTo: Person.self)
+            return person!
+        } catch {
+            print("returnUserDefaultsDataPerson222")
+            ObjectSavableError.returnRealmDataPerson
+            createUserDefaultsDataPerson()
+            do {
+                print("returnUserDefaultsDataPerson333")
+                person = try UserDefaults.standard.getObject(forKey: kPersonKey, castTo: Person.self)
+                return person!
+            } catch {
+                print("returnUserDefaultsDataPerson444")
+                ObjectSavableError.returnRealmDataPerson2
+                return nil
+            }
+        }
+    }
+
     
     func updateDaysForSorting(daysForSorting: Int){
         
