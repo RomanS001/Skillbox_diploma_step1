@@ -197,6 +197,7 @@ class Persistence{
             
             listOfOperations!.append(UserDefaultOperation(newAmount: amount, newCategory: category, newNote: note, newDate: date, newID: person!.lastIdOfOperations + 1))
             person?.lastIdOfOperations = person!.lastIdOfOperations + 1
+            print("addOperations person!.lastIdOfOperations= \(person!.lastIdOfOperations)")
             try UserDefaults.standard.setObject(listOfOperations, forKey: kListOfOperationsKey)
             try UserDefaults.standard.setObject(person, forKey: kPersonKey)
         } catch {
@@ -209,7 +210,10 @@ class Persistence{
         
         do {
             listOfOperations = returnUserDefaultsDataListOfOperations()
+            print("listOfOperations!.count= \(listOfOperations!.count)")
             for n in 0...listOfOperations!.count {
+                print("n= \(n)")
+                print("idOfObject= \(idOfObject)")
                 if listOfOperations![n].id == idOfObject {
                     listOfOperations![n].amount = newAmount
                     listOfOperations![n].category = newCategory

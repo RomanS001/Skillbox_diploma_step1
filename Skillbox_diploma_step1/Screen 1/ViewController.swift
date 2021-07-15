@@ -15,7 +15,7 @@ protocol protocolScreen1Delegate{
     func actionsOperationsClosePopUpScreen1() //закрывает PopUp-окно конкретной операции
     func editOperation(tag: Int) //переход в редактирование выбранной операции на втором экране
     
-    //realm
+    //UserDefaults
     func addOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date)
     func editOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date, id: Int)
     func deleteOperationInRealm(tag: Int)
@@ -143,7 +143,7 @@ class ViewController: UIViewController {
             delegateScreen2?.setCategoryInNewOperation(category: dataArrayOfOperations[tagForEdit].category)
             delegateScreen2?.setDateInNewOperation(date: dataArrayOfOperations[tagForEdit].date)
             delegateScreen2?.setNoteInNewOperation(note: dataArrayOfOperations[tagForEdit].note)
-            delegateScreen2?.setIDInNewOperation(id: tagForEdit)
+            delegateScreen2?.setIDInNewOperation(id: dataArrayOfOperations[tagForEdit].id)
         }
         
     }
@@ -472,6 +472,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var spec = Persistence.shared.returnUserDefaultsDataPerson()
+        print("spec?.lastIdOfOperations= \(spec?.lastIdOfOperations)")
         
         screen1MiniGraph.setDelegateScreen1RoundedGraph(delegate: self)
         
