@@ -19,8 +19,8 @@ protocol protocolScreen1Delegate{
     func addOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date)
     func editOperationInRealm(newAmount: Double, newCategory: String, newNote: String, newDate: Date, id: Int)
     func deleteOperationInRealm(tag: Int)
-    func deleteCategoryInRealm(id: Int)
-    func editCategoryInRealm(newName: String, newIcon: String, id: Int)
+    func deleteCategoryInUserDefaults(id: Int)
+    func editCategoryInUserDefaults(newName: String, newIcon: String, id: Int)
     func miniGraphStarterBackground(status: Bool)
     
     //функции возврата
@@ -124,6 +124,7 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? ViewControllerScreen2, segue.identifier == "segueToScreen2" {
             delegateScreen2 = vc
+            vc.screen2CateforyDataReceive()
             vc.delegateScreen1 = self
         }
         if let vc = segue.destination as? ViewControllerScreen1ContainerOperation, segue.identifier == "segueToScreen1Container"{
@@ -557,13 +558,13 @@ extension ViewController: protocolScreen1Delegate{
     }
     
     
-    func editCategoryInRealm(newName: String, newIcon: String, id: Int) {
-        print("editCategoryInRealm")
+    func editCategoryInUserDefaults(newName: String, newIcon: String, id: Int) {
+        print("editCategoryInUserDefaults")
         Persistence.shared.updateCategory(newName: newName, newIcon: newIcon, idOfObject: delegateScreen2!.returnDataArrayOfCategory()[id].id)
     }
     
     
-    func deleteCategoryInRealm(id: Int) {
+    func deleteCategoryInUserDefaults(id: Int) {
         Persistence.shared.deleteCategory(idOfObject: delegateScreen2!.returnDataArrayOfCategory()[id].id)
     }
     

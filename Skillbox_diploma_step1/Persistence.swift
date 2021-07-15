@@ -144,15 +144,21 @@ class Persistence{
     
     func deleteCategory(idOfObject: Int) {
         do {
+            print("deleteCategory111")
             person = returnUserDefaultsDataPerson()
+            print("returnUserDefaultsDataPerson()!.listOfCategory.count= \(returnUserDefaultsDataPerson()!.listOfCategory.count)")
+            print("idOfObject for delete= \(idOfObject)")
             for n in 0...person!.listOfCategory.count {
                 if person!.listOfCategory[n].id == idOfObject {
                     person!.listOfCategory.remove(at: n)
+                    try UserDefaults.standard.setObject(person, forKey: kPersonKey)
+                    print("returnUserDefaultsDataPerson()!.listOfCategory.count= \(returnUserDefaultsDataPerson()!.listOfCategory.count)")
                     return
                 }
             }
             try UserDefaults.standard.setObject(person, forKey: kPersonKey)
         } catch {
+            print("deleteCategory222")
             ObjectSavableError.deleteCategory
         }
     }

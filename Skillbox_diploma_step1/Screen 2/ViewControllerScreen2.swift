@@ -11,7 +11,7 @@ protocol protocolScreen2Delegate{
     func changeCategoryClosePopUpScreen2()
     func changeCategoryOpenPopUpScreen2(_ tag: Int)
     func tableViewScreen2Update(row: Int)
-    func screen2DataReceiveUpdate()
+    func screen2CateforyDataReceive()
     
     //функции возврата
     func returnScreen2MenuArray() -> [Screen2MenuData]
@@ -313,17 +313,6 @@ class ViewControllerScreen2: UIViewController {
     
     //MARK: - данные
     
-    func screen2DataReceive(){
-        print("screen2DataReceive")
-        dataArrayOfCategory = []
-        for n in Persistence.shared.returnUserDefaultsDataCategories(){
-            dataArrayOfCategory.append(DataOfCategories(name1: n.name, icon1: n.icon, id1: n.id))
-        }
-//        for n in dataArrayOfCategory {
-//            print("dataArrayOfCategory= \(n.name)")
-//        }
-    }
-    
     var screen2MenuArray: [Screen2MenuData] = []
     let screen2MenuList0 = Screen2MenuData(name: "Header", text: "")
     let screen2MenuList1 = Screen2MenuData(name: "Category", text: "Select category")
@@ -358,7 +347,7 @@ class ViewControllerScreen2: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        screen2DataReceive()
+        screen2CateforyDataReceive()
         screen2MenuArray = [screen2MenuList0, screen2MenuList1, screen2MenuList2, screen2MenuList3]
         
         self.view.insertSubview(self.blurViewScreen2, belowSubview: self.containerBottomScreen2)
@@ -424,8 +413,16 @@ class ViewControllerScreen2: UIViewController {
 extension ViewControllerScreen2: protocolScreen2Delegate{
     
     
-    func screen2DataReceiveUpdate() {
-        screen2DataReceive()
+    func screen2CateforyDataReceive() {
+        print("screen2DataReceive")
+        dataArrayOfCategory = []
+        for n in Persistence.shared.returnUserDefaultsDataCategories(){
+            dataArrayOfCategory.append(DataOfCategories(name1: n.name, icon1: n.icon, id1: n.id))
+        }
+        print("dataArrayOfCategory= \(dataArrayOfCategory)")
+//        for n in dataArrayOfCategory {
+//            print("dataArrayOfCategory= \(n.name)")
+//        }
     }
     
     

@@ -111,7 +111,7 @@ extension ViewControllerScreen2Container: protocolScreen2ContainerDelegate {
     
     
     func screen2ContainerNewCategorySwicher(){
-        delegateScreen2!.screen2DataReceiveUpdate()
+        delegateScreen2!.screen2CateforyDataReceive()
         print("AAAA")
         if delegateScreen2?.returnDataArrayOfCategory().count != 0{
             if statusEditContainer == true{
@@ -136,7 +136,7 @@ extension ViewControllerScreen2Container: protocolScreen2ContainerDelegate {
     
     
     func screen2ContainerAddNewCategory(){
-        delegateScreen2!.screen2DataReceiveUpdate()
+        delegateScreen2!.screen2CateforyDataReceive()
         tableViewContainer.performBatchUpdates({
             var newRowIndex = statusEditContainer == true ? (delegateScreen2?.returnDataArrayOfCategory().count)! + 1 : (delegateScreen2?.returnDataArrayOfCategory().count)!
             tableViewContainer.insertRows(at: [IndexPath(row: newRowIndex, section: 0)], with: .automatic)
@@ -145,12 +145,12 @@ extension ViewControllerScreen2Container: protocolScreen2ContainerDelegate {
 
     
     func screen2ContainerDeleteCategory(index: Int) {
-        delegateScreen2!.screen2DataReceiveUpdate()
+        delegateScreen2!.screen2CateforyDataReceive()
         tableViewContainer.performBatchUpdates({
-            print("ZZZ2")
+            print("ZZZ2, index= \(index)")
             tableViewContainer.deleteRows(at: [IndexPath(row: index + 2, section: 0)], with: .left)
         }, completion: { status in self.tableViewContainer.reloadData() } )
-        
+        print("ZZZ3")
     }
     
     
@@ -158,7 +158,7 @@ extension ViewControllerScreen2Container: protocolScreen2ContainerDelegate {
 
         var newRowIndex = statusEditContainer == true ? (delegateScreen2?.returnDataArrayOfCategory().count)! + 1 : (delegateScreen2?.returnDataArrayOfCategory().count)!
         
-        delegateScreen2!.screen2DataReceiveUpdate()
+        delegateScreen2!.screen2CateforyDataReceive()
         tableViewContainer.reloadData()
     }
     
@@ -193,6 +193,7 @@ extension ViewControllerScreen2Container: UITableViewDelegate, UITableViewDataSo
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("delegateScreen2?.returnDataArrayOfCategory().count= \(Int(delegateScreen2!.returnDataArrayOfCategory().count))")
         if delegateScreen2?.returnDataArrayOfCategory().count == 0{
             statusEditContainer = true
             return 2
