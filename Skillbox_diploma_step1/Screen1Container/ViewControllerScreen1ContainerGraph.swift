@@ -45,32 +45,32 @@ class ViewControllerScreen1ContainerGraph: UIViewController {
         //Заполнение дней, в которых не было операций
         //Проверка наличия операция сегодня. Если нет проставляется 0.
         if graphData.count > 0{
-            print("1111")
-            if graphDataFinal.isEmpty {
-                graphDataFinal.append(GraphData(newDate: Date(), newAmount: graphData.first!.amount))
-            }
+            print("graphData1111")
+//            if graphDataFinal.isEmpty {
+//                graphDataFinal.append(GraphData(newDate: Date(), newAmount: graphData[0].amount))
+//            }
         
             //Проверка заполнения оставшихся дней. Если запись пуста - ставим 0.
-            var x: Int = 1
+            var x: Int = 0
             
-            for n in 1..<(delegateScreen1?.returnDaysForSorting())!{
-                print("2222")
+            for n in 0..<(delegateScreen1?.returnDaysForSorting())!{
+                print("graphData2222")
                 
-                if graphData.count >= x+1{
-                    print("3333")
+                if graphData.count >= x + 1{
+                    print("graphData3333")
                     if delegateScreen1?.returnDayOfDate(graphData[x].date) != delegateScreen1?.returnDayOfDate(Calendar.current.date(byAdding: .day, value: -n, to: Date())!) {
-                        print("4444")
+                        print("graphData4444")
                         graphDataFinal.append(GraphData(newDate: Calendar.current.date(byAdding: .day, value: -n, to: Date())!, newAmount: 0))
                     }
                     else{
-                        print("5555")
+                        print("graphData5555")
                         graphDataFinal.append(GraphData(newDate: Calendar.current.date(byAdding: .day, value: -n, to: Date())!, newAmount: graphData[x].amount))
                         x += 1
 
                     }
                 }
                 else{
-                    print("5555")
+                    print("graphData6666")
                     graphDataFinal.append(GraphData(newDate: Calendar.current.date(byAdding: .day, value: -n, to: Date())!, newAmount: 0))
                     x += 1
                 }
@@ -78,52 +78,6 @@ class ViewControllerScreen1ContainerGraph: UIViewController {
             }
             
         }
-        
-        
-//        if graphData.count > 0{
-//            print("1111")
-//            if graphDataFinal.isEmpty {
-//                graphDataFinal.append(GraphData(newDate: Date(), newAmount: graphData.first!.amount))
-//            }
-//
-//            //Проверка заполнения оставшихся дней. Если запись пуста - ставим 0.
-//            var x: Int = 1
-//
-//            for n in 1..<(delegateScreen1?.returnDaysForSorting())!{
-//                print("2222")
-//
-//                var dateForSorting: Date = { () -> Date in
-//                    if self.delegateScreen1?.returnDaysForSorting() == 30 {
-//                        return Calendar.current.date(byAdding: .month, value: -n, to: Date())!
-//                    }
-//                    else {
-//                        return Calendar.current.date(byAdding: .day, value: -n, to: Date())!
-//                    }
-//                }()
-//
-//                if graphData.count >= x+1{
-//                    print("3333")
-//                    if delegateScreen1?.returnDayOfDate(graphData[x].date) != delegateScreen1?.returnDayOfDate(dateForSorting) {
-//                        print("4444")
-//                        graphDataFinal.append(GraphData(newDate: dateForSorting, newAmount: 0))
-//                    }
-//                    else{
-//                        print("5555")
-//                        graphDataFinal.append(GraphData(newDate: dateForSorting, newAmount: graphData[x].amount))
-//                        x += 1
-//
-//                    }
-//                }
-//                else{
-//                    print("5555")
-//                    graphDataFinal.append(GraphData(newDate: dateForSorting, newAmount: 0))
-//                    x += 1
-//                }
-//
-//            }
-//
-//        }
-
 
 
         for n in graphDataFinal {
