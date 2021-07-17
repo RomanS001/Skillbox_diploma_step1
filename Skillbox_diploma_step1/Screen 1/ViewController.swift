@@ -10,7 +10,7 @@ import UIKit
 
 protocol protocolScreen1Delegate{
     func findAmountOfHeaders() //подсчёт заголовков с датами в основнй таблице экрана
-    func screen1AllUpdate() //обновление данных на всэм экрана
+    func screen1AllUpdate() //обновление данных на всём экрана
     func actionsOperationsOpenPopUpScreen1(_ tag: Int) //открывает PopUp-окно конкретной операции
     func actionsOperationsClosePopUpScreen1() //закрывает PopUp-окно конкретной операции
     func editOperation(tag: Int) //переход в редактирование выбранной операции на втором экране
@@ -209,6 +209,7 @@ class ViewController: UIViewController {
         daysForSortingRealmUpdate()
         countingIncomesAndExpensive()
         delegateScreen1GraphContainer?.containerGraphUpdate()
+        screen1MiniGraph.setNeedsDisplay()
     }
     
     
@@ -602,7 +603,6 @@ extension ViewController: protocolScreen1Delegate{
         countingIncomesAndExpensive()
         changeDaysForSorting()
         screen1MiniGraph.setNeedsDisplay()
-        
     }
     
     func returnArrayForIncrease() -> [Int]{
